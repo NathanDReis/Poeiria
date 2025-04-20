@@ -1,34 +1,16 @@
-const theme = (element) => {
-    const html = document.querySelector("html");
-    html.classList.toggle("light");
-    const svgs = element.querySelectorAll("svg");
-    svgs.forEach((svg) => {
-        svg.classList.toggle("hidden");
-    });
-    element.classList.toggle("light");
-    localStorage.setItem("theme", element.classList[0]);
+if(localStorage.getItem("isAndroid")) {
+    const $boxHeader = document.querySelector("header .box");
+    $boxHeader.classList.add("androidHeader");
 }
-
-(() => {
-    const $theme = document.querySelector("#theme");
-    if(localStorage.getItem("theme") === 'light') {
-        theme($theme);
-    }
-
-    if(localStorage.getItem("isAndroid")) {
-        const $boxHeader = document.querySelector("header .box");
-        $boxHeader.classList.add("androidHeader");
-    }
-})()
 
 const createLoading = () => {
     const $html = document.querySelector("html");
     const loadingDiv = document.createElement("div");
     loadingDiv.id = "loading";
     
-    const loading = document.createElement("div");
-    loading.classList.add("loader");
-    loadingDiv.appendChild(loading);
+    const loadingSpan = document.createElement("span");
+    loadingSpan.classList.add("loader");
+    loadingDiv.appendChild(loadingSpan);
     
     $html.appendChild(loadingDiv);
 }

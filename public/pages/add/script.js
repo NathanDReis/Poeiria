@@ -9,9 +9,7 @@ let currentMedia = {};
 (async () => {
     try {
         isLoading.true();
-        const poeiriaSession = JSON.parse(localStorage.getItem("register"));
-        poeiria = poeiriaSession ? poeiriaSession : await Poeiria.getDoc();
-        !poeiriaSession ? localStorage.setItem("register", JSON.stringify(poeiria)) : null;
+        poeiria = await Poeiria.getDoc();
     
         if(poeiria) {
             $form.author.value = poeiria.author;
@@ -86,7 +84,6 @@ $form.addEventListener("submit", async (e) => {
                 }
                 else {
                     await Poeiria.setDoc(data);
-                    localStorage.removeItem("register");
                     const docId = new URLSearchParams(location.search).get('doc');
                     reset();
                     location = `../read/index.html?doc=${docId}`;
@@ -182,10 +179,4 @@ function page(next) {
 function locationDoc() {
     const docId = new URLSearchParams(location.search).get('doc');
     location = docId ? `../read/index.html?doc=${docId}` : "../home/index.html";
-}
-
-function pageImages(images) {
-    const link = document.createElement("a");
-    link.href = images ? "#images-box" : "#form";
-    link.click();
 }

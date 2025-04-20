@@ -12,55 +12,41 @@ main.android {
 main {
     width: 100dvw;
     height: calc(100dvh - 70px);
-    margin: 70px 0 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     #box.android {
         max-height: calc(100dvh - 99px);
     }
 
     #box {
-        width: 100dvw;
-        height: inherit;
-        max-height: calc(100dvh - 70px);
         overflow: hidden;
+        display: grid;
+        align-items: center;
+        justify-content: center;
 
         form {
-            width: inherit;
-            max-width: inherit;
-            height: inherit;
-            max-height: inherit;
             display: grid;
             align-items: center;
             justify-content: center;
+            gap: 25px;
 
             #slogan {
                 font-family: sans-serif;
                 font-size: 2.5rem;
-                color: var(--sloganCL);
+                color: var(--background);
                 letter-spacing: 3px;
                 cursor: default;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-        
-                img {
-                    width: 70px;
-                }
+            }
+
+            input, textarea {
+                width: 80dvw;
+                max-width: 500px;
             }
 
             textarea {
-                height: 300px;
-                min-height: 300px;
-                max-height: 300px;
-                max-width: 80dvw;
-            }
-
-            textarea, input {
-                width: 80dvw;
-                min-width: 300px;
+                padding: 10px;
             }
 
             .buttons {
@@ -128,7 +114,6 @@ main {
             
             .controls {
                 z-index: 2;
-                position: sticky;
                 top: 70px;
                 background-color: var(--background);
                 display: flex;
@@ -202,8 +187,9 @@ button.images-btn {
     font-size: 1.2rem;
     width: 80dvw;
     cursor: pointer;
+}
 
-    svg {
-        width: 30px;
-    }
+input {
+    height: 30px;
+    padding: 10px;
 }

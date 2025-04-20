@@ -5,21 +5,22 @@ const vazio = /^\s*$/;
 let registers = [];
 let filterSaved;
 
-(() => {
+function validateAndroid() {
     const isAndroid = new URLSearchParams(location.search).get('android');
     if(isAndroid) {
         localStorage.setItem("isAndroid","true");
         const $boxHeader = document.querySelector("header .box");
         $boxHeader.classList.add("padding");
     }
-})()
+}
+validateAndroid();
 
 async function getAll() {
     try {
         isLoading.true();
-        localStorage.removeItem("register");
 
         registers = await Poeiria.getAll();
+        console.log(registers);
         poeiria(registers);
         author(registers);
         
@@ -35,7 +36,7 @@ async function getAll() {
         console.error(error);
         openDialog.alert(error);
     }
-    finally{isLoading.false()}
+    finally{ isLoading.false() }
 }
 
 function poeiria(data) {
@@ -52,7 +53,6 @@ function poeiria(data) {
             h1.innerHTML = poeiria.title;
             
             card.onclick = () => {
-                localStorage.setItem("register", JSON.stringify(poeiria));
                 location = `../read/index.html?doc=${poeiria.uid}`;
             }
     
@@ -75,7 +75,6 @@ function author(data) {
     })
 }
 
-const $self = document.querySelector("#self");
 const search = (element) => {
     const value = element.value;
     const regex = new RegExp(value, 'i');
@@ -88,7 +87,6 @@ const search = (element) => {
         :poeiria(vazio.test(value) ? searchAuthor($author) : registers.filter((register) => 
             (regex.test(register.title) || regex.test(register.lines.join(" "))) && regexA.test(register.author)));
     localStorage.setItem("filter", JSON.stringify({search: value, author: $author.value}));
-    $self.checked = false;
 }
 
 const searchAuthor = (element) => {
@@ -106,37 +104,4 @@ const searchAuthor = (element) => {
     :poeiria(vazio.test(value) ? search($search) : registers.filter((register) => 
         (regexS.test(register.title) || regexS.test(register.lines.join(" "))) && regex.test(register.author)));
     localStorage.setItem("filter", JSON.stringify({search: $search.value, author: value}));
-    $self.checked = false;
-}
-
-const searchSelf = async (element) => {
-    try {
-        isLoading.true();
-        console.log(element.checked)
-        if(element.checked) {
-            const value = await Poeiria.getMyUID();
-            const regex = {test: (valueTest) => value === valueTest};    
-            
-            $search.value = "";
-            $author.value = "";
-                
-            poeiria(vazio.test(value) ? registers : registers.filter((register) => regex.test(register.createdBy)))
-        }
-        else {
-            // Filter
-            filterSaved = JSON.parse(localStorage.getItem("filter"));
-            if(filterSaved && (!vazio.test(filterSaved.search) || !vazio.test(filterSaved.author))) {
-                $search.value = filterSaved.search;
-                $author.value = filterSaved.author;
-                search($search);
-            } 
-            else {
-                poeiria(registers);
-            }
-        }
-    }
-    catch (error) {
-        openDialog.alert("Erro na pesquisa","Tente novamente mais tarde");
-    }
-    finally{isLoading.false()}
 }

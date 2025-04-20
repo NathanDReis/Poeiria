@@ -12,7 +12,7 @@ async function getAll() {
         author(registers);
         
         // Filter
-        filterSaved = JSON.parse(localStorage.getItem("filter"));
+        filterSaved = JSON.parse(localStorage.getItem("filter-write"));
         if(filterSaved && (!vazio.test(filterSaved.search) || !vazio.test(filterSaved.author))) {
             document.querySelector("#search").value = filterSaved.search;
             document.querySelector("#author").value = filterSaved.author;
@@ -74,7 +74,7 @@ const search = (element) => {
         ?poeiria(vazio.test(value) ? registers : registers.filter((register) => (regex.test(register.title) || regex.test(register.lines.join(" ")))))
         :poeiria(vazio.test(value) ? searchAuthor($author) : registers.filter((register) => 
             (regex.test(register.title) || regex.test(register.lines.join(" "))) && regexA.test(register.author)));
-    localStorage.setItem("filter", JSON.stringify({search: value, author: $author.value}));
+    localStorage.setItem("filter-write", JSON.stringify({search: value, author: $author.value}));
 }
 
 const searchAuthor = (element) => {
@@ -88,5 +88,5 @@ const searchAuthor = (element) => {
     ?poeiria(vazio.test(value) ? registers : registers.filter((register) => regex.test(register.author)))
     :poeiria(vazio.test(value) ? search($search) : registers.filter((register) => 
         (regexS.test(register.title) || regexS.test(register.lines.join(" "))) && regex.test(register.author)));
-    localStorage.setItem("filter", JSON.stringify({search: $search.value, author: value}));
+    localStorage.setItem("filter-write", JSON.stringify({search: $search.value, author: value}));
 }
