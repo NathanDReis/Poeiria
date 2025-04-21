@@ -10,6 +10,7 @@
     justify-content: left;
     transition: 1s;
     margin-top: 50px;
+    gap: 15px;
 
     select {
         height: 30px;
@@ -17,6 +18,16 @@
         width: 25dvw;
         padding: 0;
         margin-left: 20px;
+    }
+
+    input {
+        height: 30px;
+        max-width: 400px;
+        width: 40dvw;
+        padding: 10px;
+        outline: none;
+        border: none;
+        border-radius: 2px;
     }
 }
 
