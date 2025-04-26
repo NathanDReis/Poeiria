@@ -1,10 +1,5 @@
 @import url(../../main.css);
 
-.container {
-    display: grid;
-    justify-content: center;
-}
-
 main {
     width: 100dvw;
     padding: 20px 25px;

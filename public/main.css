@@ -9,10 +9,9 @@
 }
 
 :root {
-    --background: #dddddd;
     --svgBGH: #6d6d6d;
-    --header: #949494;
-    --sloganCL: #dbdbdb;
+    --header: #f7f7f7;
+    --sloganCL: #666666;
     --inputBG: #fff;
     --inputCL: #000;
     --scrollCL: #cecece;
@@ -20,13 +19,6 @@
     --txt: #fff;
     --txtI: #df8e5f;
     --shadow: 0 0 10px #47667b34;
-}
-
-.container {
-    position: relative;
-    width: 100dvw;
-    min-height: 100dvh;
-    background-color: var(--background);
 }
 
 *::-webkit-scrollbar {
@@ -41,25 +33,30 @@ a {
 }
 
 header {
-    position: fixed;
     width: 100dvw;
-    height: 50px;
-    overflow: hidden;
-    z-index: 1000;
+    height: 70px;
     background-color: var(--header);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: 1s;
 
     #slogan {
         font-family: sans-serif;
         font-size: 1.2rem;
-        color: var(--background);
+        color: #1a1a1a;
         letter-spacing: 2.5px;
         cursor: pointer;
         transition: .3s;
         padding: 0 0 0 20px;
+    }
+
+    .poeiria {
+        opacity: .7;
+        cursor: pointer;
+    }
+
+    .poeiria:hover {
+        opacity: .5;
     }
 
     #slogan:hover {
@@ -73,16 +70,10 @@ header {
         justify-content: right;
         padding: 0 30px 0 0;
 
-        li a svg {
-            width: 25px;
-            fill: var(--background);
+        li a i {
+            width: 50%;
+            height: 50%;
             cursor: pointer;
-            padding: 10px;
-            transition: .3s;
-        }
-
-        li a svg:hover {
-            fill: var(--txtI);
         }
     }
 }
@@ -95,7 +86,7 @@ main {
     margin-top: 70px;
 }
 
-input, textarea, select {
+input, textarea {
     background-color: var(--inputBG);
     color: var(--inputCL);
     border: none;
