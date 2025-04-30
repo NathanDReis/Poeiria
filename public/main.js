@@ -1,8 +1,3 @@
-if(localStorage.getItem("isAndroid")) {
-    const $boxHeader = document.querySelector("header .box");
-    $boxHeader.classList.add("androidHeader");
-}
-
 const createLoading = () => {
     const $html = document.querySelector("html");
     const loadingDiv = document.createElement("div");

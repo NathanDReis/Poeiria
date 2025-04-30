@@ -33,22 +33,11 @@ a {
 }
 
 header {
-    width: 100dvw;
     height: 70px;
     background-color: var(--header);
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    #slogan {
-        font-family: sans-serif;
-        font-size: 1.2rem;
-        color: #1a1a1a;
-        letter-spacing: 2.5px;
-        cursor: pointer;
-        transition: .3s;
-        padding: 0 0 0 20px;
-    }
 
     .poeiria {
         opacity: .7;
@@ -58,54 +47,10 @@ header {
     .poeiria:hover {
         opacity: .5;
     }
-
-    #slogan:hover {
-        opacity: .5;
-    }
-
-    menu {
-        list-style: none;
-        display: flex;
-        align-items: center;
-        justify-content: right;
-        padding: 0 30px 0 0;
-
-        li a i {
-            width: 50%;
-            height: 50%;
-            cursor: pointer;
-        }
-    }
-}
-
-.androidHeader {
-    padding: 30px 15px 0 !important;
 }
 
 main {
-    margin-top: 70px;
-}
-
-input, textarea {
-    background-color: var(--inputBG);
-    color: var(--inputCL);
-    border: none;
-    outline: none;
-    border-radius: 2px;
-    font-size: 1rem;
-}
-
-input::placeholder, textarea::placeholder {
-    color: var(--inputCL);
-}
-
-textarea {
-    min-height: 120px;
-    max-height: 120px;
-}
-
-select {
-    cursor: pointer;
+    margin-top: 50px;
 }
 
 dialog {

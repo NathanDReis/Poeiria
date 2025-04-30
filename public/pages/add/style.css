@@ -1,171 +1,93 @@
 @import url(../../main.css);
 
-* {
-    scroll-behavior: smooth;
-}
-
-main.android {
-    height: calc(100dvh - 99px);
-    margin-top: 99px;
-}
-
-main {
-    width: 100dvw;
-    height: calc(100dvh - 70px);
-
-    #box.android {
-        max-height: calc(100dvh - 99px);
-    }
-
-    #box {
-        overflow: hidden;
+#box {
+    form {
         display: grid;
         align-items: center;
         justify-content: center;
+        gap: 25px;
 
-        form {
+        textarea {
+            width: 80dvw;
+            max-width: 500px;
+            padding: 10px;
+            min-height: calc(100dvh - 510px);
+        }
+    }
+
+    #images-box {
+        position: relative;
+        width: inherit;
+        max-width: inherit;
+        height: inherit;
+        max-height: inherit;
+        display: block;
+        justify-content: center;
+        align-items: center;
+
+        .currentPage {
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100dvw;
+            height: 70px;
+            color: var(--inputCL);
+            gap: 20px;
+            z-index: 2;
+            
+            div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+            }
+        }
+        
+        .controls {
+            top: 70px;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 70px;
+        }
+
+        #search {
+            width: 65dvw;
+            max-width: 400px;
+        }
+
+        #images-center {
+            width: 100dvw;
+            min-height: calc(100dvh - 70px - 240px);
             display: grid;
             align-items: center;
             justify-content: center;
-            gap: 25px;
-
-            #slogan {
-                font-family: sans-serif;
-                font-size: 2.5rem;
-                color: var(--background);
-                letter-spacing: 3px;
-                cursor: default;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            input, textarea {
-                width: 80dvw;
-                max-width: 500px;
-            }
-
-            textarea {
-                padding: 10px;
-            }
-
-            .buttons {
-                margin: 30px 0;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 20px;
-                
-                button {
-                    width: 100%;
-                    height: 50px;
-                    padding: 10px;
-                    border-radius: 10px;
-                    background-color: var(--inputBG);
-                    border: none;
-                    color: #fff;
-                    outline: none;
-                    font-size: 1rem;
-                    color: var(--color);
-                    transition: .3s;
-                }
-                
-                button:hover {
-                    color: var(--color);
-                }
-                
-                button:disabled {
-                    cursor: not-allowed;
-                    opacity: .3;
-                }
-            }
+            padding-bottom: 200px;
         }
 
-        #images-box {
-            position: relative;
-            width: inherit;
-            max-width: inherit;
-            height: inherit;
-            max-height: inherit;
-            display: block;
+        #images {
+            width: 70dvw;
+            display: flex;
             justify-content: center;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
 
-            .currentPage {
-                position: sticky;
-                top: 0;
-                background-color: var(--background);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100dvw;
-                height: 70px;
-                color: var(--inputCL);
-                gap: 20px;
-                z-index: 2;
-                
-                div {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 20px;
-                }
-            }
-            
-            .controls {
-                z-index: 2;
-                top: 70px;
-                background-color: var(--background);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                height: 70px;
-                
-                svg {
-                    fill: var(--inputCL);
-                    width: 30px;
-                }
-            }
-            
-            #box-button {
-                z-index: 2;
-                position: sticky;
-                top: 140px;
-                background-color: var(--background);
-                width: inherit;
-                display: grid;
-                align-items: center;
-                justify-content: center;
-            }
-
-            #images-center {
-                width: 100dvw;
-                min-height: calc(100dvh - 70px - 240px);
-                display: grid;
-                align-items: center;
-                justify-content: center;
-                padding-bottom: 200px;
-            }
-
-            #images {
-                width: 70dvw;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 10px;
-
-                img {
-                    flex-grow: 1;
-                    max-width: 300px;
-                }
+            img {
+                flex-grow: 1;
+                max-width: 300px;
             }
         }
     }
 }
 
-img, svg, button {
+
+img {
     cursor: pointer;
 }
 
@@ -173,23 +95,4 @@ img.focus {
     border: .7px solid var(--inputCL);
     filter: brightness(40%);
     z-index: 1;
-}
-
-button.images-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    gap: 40px;
-    border: none;
-    outline: none;
-    margin: 20px;
-    font-size: 1.2rem;
-    width: 80dvw;
-    cursor: pointer;
-}
-
-input {
-    height: 30px;
-    padding: 10px;
 }

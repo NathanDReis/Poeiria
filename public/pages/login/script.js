@@ -18,15 +18,6 @@ const validState = async () => {
 }
 validState();
 
-(() => {
-    if(localStorage.getItem("isAndroid")) {
-        const $inputs = document.querySelectorAll("input");
-        const $createAccount = document.querySelector("#createAccount");
-        $inputs.forEach((input) => input.classList.add("android"));
-        $createAccount.classList.add("android");
-    }
-})()
-
 const $form = document.querySelector("form");
 $form.oninput = () => {
     $form.submit.disabled = !$form.checkValidity() && $form.password.value.length > 6;
@@ -86,8 +77,4 @@ const recoverPassword = async () => {
 const $loginGoogle = document.querySelector("#loginGoogle");
 $loginGoogle.onclick = () => {
     Poeiria.loginG();
-}
-
-if(localStorage.getItem("isAndroid")) {
-    $loginGoogle.classList.add("hidden");
 }

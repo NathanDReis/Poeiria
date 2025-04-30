@@ -5,16 +5,6 @@ const vazio = /^\s*$/;
 let registers = [];
 let filterSaved;
 
-function validateAndroid() {
-    const isAndroid = new URLSearchParams(location.search).get('android');
-    if(isAndroid) {
-        localStorage.setItem("isAndroid","true");
-        const $boxHeader = document.querySelector("header .box");
-        $boxHeader.classList.add("padding");
-    }
-}
-validateAndroid();
-
 async function getAll() {
     try {
         isLoading.true();

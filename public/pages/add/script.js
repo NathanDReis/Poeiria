@@ -10,36 +10,21 @@ let currentMedia = {};
     try {
         isLoading.true();
         poeiria = await Poeiria.getDoc();
-    
-        if(poeiria) {
-            $form.author.value = poeiria.author;
-            $form.title.value = poeiria.title;
-            $form.text.value = poeiria.lines.join("\n");
-            poeiria.search ? $search.value = poeiria.search : null;
-            poeiria.url ? urlImage = poeiria.url : null;
-            $form.submit.disabled = false;
-            $images.querySelector("img").src = urlImage;
-    
-            return document.querySelector("#add").remove();
-        }
-        document.querySelector("#edit").remove();
+        if(!poeiria) return;
+
+        $form.author.value = poeiria.author;
+        $form.title.value = poeiria.title;
+        $form.text.value = poeiria.lines.join("\n");
+        poeiria.search ? $search.value = poeiria.search : null;
+        poeiria.url ? urlImage = poeiria.url : null;
+        $form.submit.disabled = false;
+        $images.querySelector("img").src = urlImage;
     }
     catch (error) {
         console.error(error);
-        document.querySelector("#edit").remove();
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 })()
-
-function isAndroid() {
-    if(localStorage.getItem("isAndroid")) {
-        $box = document.querySelector("#box");
-        $main = document.querySelector("main");
-        $box.classList.add("android");
-        $main.classList.add("android");
-    }
-}
-isAndroid();
 
 const reset = () => {
     $search.value = "";
@@ -172,8 +157,8 @@ async function renderImage(page='media') {
 
 function page(next) {
     next && currentMedia
-        ?renderImage('nextMedia')
-        :renderImage('prevMedia');
+        ? renderImage('nextMedia')
+        : renderImage('prevMedia');
 }
 
 function locationDoc() {

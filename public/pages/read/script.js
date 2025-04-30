@@ -21,53 +21,51 @@ let poeiria;
             }
         })
 
+        const $modalDelete = document.querySelector(".modal-delete");
         if(!poeiria.published) {
-            const notRestore = document.querySelectorAll(".notRestore");
-            notRestore.forEach(n => n.remove());
             document.querySelector("#restore").classList.remove("hidden");
+            $modalDelete.innerHTML = "Deseja realmente excluir este texto?";
+        } else {
+            $modalDelete.innerHTML = "Deseja realmente retirar a publicação?";
         }
     }
     catch (error) {
         openDialog.alert("Arquivo não encontrado!");
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 })()
 
 async function deleteData() {
     try {
         isLoading.true();
+
         if(poeiria.published) {
-            const response = await openDialog.confirm("Deseja retirar a publicação?");
-            if(response) {
-                await Poeiria.noPublishedDoc();
-                location = "../home/index.html";
-            }
+            await Poeiria.noPublishedDoc();
+            return location = "../home/index.html";
         }
-        else {
-            const response = await openDialog.confirm("Excluir PERMANENTEMENTE?");
-            if(response) {
-                await Poeiria.deleteDoc();
-                location = "../write/index.html";
-            }
-        }
+        
+        await Poeiria.deleteDoc();
+        location = "../write/index.html";
     }
     catch (error) {
-        openDialog.alert("Delete", error);
+        console.error(error);
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 }
 
 function clipboard() {
     if(navigator.clipboard) {    
-        const $clipboards = document.querySelectorAll("#clipboard svg");
+        const $clipboards = document.querySelectorAll("#clipboard i");
         
         navigator.clipboard.writeText(`${poeiria.title}\n\n"${poeiria.lines.join("\n")}"\n\n${poeiria.author} | (https://poeiria.web.app/pages/read/index.html?doc=${poeiria.uid})`)
         .then(() => {
             $clipboards[0].classList.add("hidden");
             $clipboards[1].classList.remove("hidden");
+            $clipboards[2].classList.add("hidden");
         })
         .catch(() => {
             $clipboards[0].classList.add("hidden");
+            $clipboards[1].classList.add("hidden");
             $clipboards[2].classList.remove("hidden");
         })
         .finally(() => {
