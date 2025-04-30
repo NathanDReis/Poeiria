@@ -203,5 +203,31 @@ const Poeiria = {
       catch (error) {
         throw formatedError(error);
       }
+    },
+    toast: (title="Poeiria", message="", complement="") => {
+      const toastContainer = document.getElementById('toastContainer');
+      if(toastContainer) {
+        toastContainer.remove();
+      }
+
+      const body = document.querySelector("body");
+      body.innerHTML = `
+      <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <!-- <img src="..." class="rounded me-2" alt="..."> -->
+            <strong class="me-auto">${title}</strong>
+            <small>${complement}</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            ${message}
+          </div>
+        </div>
+      </div>`;
+
+      const toastLive = document.getElementById('liveToast');
+      const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
+      toastBootstrap.show();
     }
 }

@@ -41,7 +41,7 @@ async function deleteData() {
 
         if(poeiria.published) {
             await Poeiria.noPublishedDoc();
-            return location = "../home/index.html";
+            return location.reload();
         }
         
         await Poeiria.deleteDoc();
@@ -89,15 +89,14 @@ function locationDoc() {
 async function published() {
     try {
         isLoading.true();
-        const response = await openDialog.confirm(`Deseja publicar ${poeiria.title}?`);
-        if(response) {
-           poeiria['published'] = true;
-           await Poeiria.setDoc(poeiria, poeiria.uid);
-           history.back();
-        }
+        poeiria['published'] = true;
+        await Poeiria.setDoc(poeiria, poeiria.uid);
+        location.reload();
     }
     catch (error) {
         openDialog.alert("Restaurar", error);
     }
-    finally{isLoading.false()}
+    finally{ isLoading.false() }
 }
+
+Poeiria.toast("Sucesso", "Boa noite!", "2 min abr");
