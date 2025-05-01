@@ -24,7 +24,7 @@ async function getAll() {
     }
     catch (error) {
         console.error(error);
-        isAlert.toast.danger("Erro", error.message);
+        isAlert.toast.danger("Erro", error);
     }
     finally { isLoading.false() }
 }

@@ -23,7 +23,11 @@
                 <h1 class="display-5">
                     Entrar
                 </h1>
-                <a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" onclick="registration()">
+                <a 
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#confirmBackdrop"
+                >
                     Novo no site? Registre-se
                 </a>
 
@@ -42,7 +46,7 @@
                 </a>
 
                 <div class="buttons">
-                    <button type="submit" name="submit" class="btn btn-light" disabled>
+                    <button type="submit" name="submit" class="btn btn-light">
                         Entrar
                     </button>
                     <span style="font-size: .7rem;">OU</span>
@@ -53,6 +57,25 @@
             </form>
         </main>
     </article>
+
+    <!-- Modal CONFIRM -->
+    <div class="modal fade" id="confirmBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmBackdropLabel">Criar Usuário</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja criar este usuário?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="registration()" data-bs-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 

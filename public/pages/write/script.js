@@ -20,10 +20,10 @@ async function getAll() {
         } 
     }
     catch (error) {
-        console.error(error)
-        openDialog.alert("Busca", error);
+        console.error(error);
+        isAlert.toast.danger("Erro", "Não foi possível encontrar textos no momento.");
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 }
 
 function poeiria(data) {

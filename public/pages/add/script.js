@@ -117,7 +117,7 @@ async function getImage(page=1) {
     }
     catch (error) {
         console.error(error);
-        isAlert.toast.danger("Erro", error.message);
+        isAlert.toast.danger("Erro", error);
     }
     finally { isLoading.false() }
 }

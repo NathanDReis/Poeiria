@@ -32,47 +32,42 @@ $form.onsubmit = async (e) => {
     }
     catch (error) {
         console.error(error);
-        isAlert.toast.danger("Erro", error.message);
+        isAlert.toast.danger("Erro", error);
     }
     finally { isLoading.false() }
 }
 
 const registration = async () => {
     try {
-        if($form.checkValidity()) {
-            isLoading.true();
-            const response = await openDialog.confirm("Criar conta",`Deseja criar ${$form.email.value} com a senha digitada?`);
-            if(response) {
-                await Poeiria.createUser($form.email.value, $form.password.value);
-                location = "../home/index.html";
-            }
-        }
-        else {
-            openDialog.alert("Cadastro", "Preencha os dados corretamente!");
-        }
+        if(!$form.checkValidity()) 
+            return isAlert.toast.info("Validação", "Preencha os dados corretamente.");
+
+        isLoading.true();
+        await Poeiria.createUser($form.email.value, $form.password.value);
+        location = "../home/index.html";
     }
     catch (error) {
-        openDialog.alert(error);
+        console.error(error);
+        isAlert.toast.danger("Erro", error);
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 }
 
 const vazio = /^\s*$/; 
 const recoverPassword = async () => {
     try {
-        if(!vazio.test($form.email.value)) {
-                isLoading.true();
-                await Poeiria.recoverPassword($form.email.value);
-                openDialog.alert("Redefinição de Senha", "Confira seu email para criar a nova senha");
-        }
-        else {
-            openDialog.alert("Preencha o email corretamente!");
-        }
+        if(vazio.test($form.email.value)) 
+            return isAlert.toast.info("Validação", "Preencha o campo de email para prosseguir.");
+
+        isLoading.true();
+        await Poeiria.recoverPassword($form.email.value);
+        isAlert.toast.light("Redefinição de Senha", "Confira seu email para criar a nova senha.");
     }
     catch (error) {
-        openDialog.alert(error);
+        console.error(error)
+        isAlert.toast.danger("Erro", "Não foi possível redefinir a senha no momento.");
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 }
 
 const $loginGoogle = document.querySelector("#loginGoogle");
