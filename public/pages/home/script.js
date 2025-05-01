@@ -24,9 +24,9 @@ async function getAll() {
     }
     catch (error) {
         console.error(error);
-        openDialog.alert(error);
+        isAlert.toast.danger("Erro", error.message);
     }
-    finally{ isLoading.false() }
+    finally { isLoading.false() }
 }
 
 function poeiria(data) {

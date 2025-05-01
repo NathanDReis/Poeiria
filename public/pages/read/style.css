@@ -14,13 +14,12 @@ main {
     .box {
         width: 80dvw;
         max-width: 400px;
-        max-height: calc(100dvh - 200px);
+        max-height: calc(100dvh - 150px);
         background: linear-gradient(90deg, #000000ad, #00000042), var(--url);
         background-size: cover;
         background-position: center;
         color: #fff;
         padding: 20px;
-        border-radius: 10px;
         display: grid;
         align-items: center;
         gap: 20px;

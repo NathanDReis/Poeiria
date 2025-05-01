@@ -49,10 +49,6 @@ header {
     }
 }
 
-main {
-    margin-top: 50px;
-}
-
 dialog {
     position: fixed;
     top: 0;

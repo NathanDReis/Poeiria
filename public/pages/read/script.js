@@ -30,7 +30,7 @@ let poeiria;
         }
     }
     catch (error) {
-        openDialog.alert("Arquivo não encontrado!");
+        isAlert.toast.danger("Erro", "Arquivo não encontrado.");
     }
     finally { isLoading.false() }
 })()
@@ -49,6 +49,7 @@ async function deleteData() {
     }
     catch (error) {
         console.error(error);
+        isAlert.toast.danger("Erro", "Não possível concluir a exclusão.");
     }
     finally { isLoading.false() }
 }
@@ -62,6 +63,7 @@ function clipboard() {
             $clipboards[0].classList.add("hidden");
             $clipboards[1].classList.remove("hidden");
             $clipboards[2].classList.add("hidden");
+            isAlert.toast.success("Sucesso", "Texto copiado com sucesso!")
         })
         .catch(() => {
             $clipboards[0].classList.add("hidden");
@@ -77,7 +79,7 @@ function clipboard() {
         })
     }
     else {
-        openDialog.alert("Cópia", "Seu navegador não suporta a API Clipboard.");
+        isAlert.toast.danger("Erro Cópia", "Seu navegador não suporta a API Clipboard.");
     }
 }
 
@@ -94,9 +96,7 @@ async function published() {
         location.reload();
     }
     catch (error) {
-        openDialog.alert("Restaurar", error);
+        isAlert.toast.danger("Erro", "Não foi possível publicar este texto.");
     }
     finally{ isLoading.false() }
 }
-
-Poeiria.toast("Sucesso", "Boa noite!", "2 min abr");

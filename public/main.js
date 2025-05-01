@@ -27,63 +27,43 @@ async function logout() {
         isLoading.false();
     }
     catch (error) {
-        openDialog.alert("LOGIN", error);
+        isAlert.toast.danger("Erro", error);
     }
 }
 
 // DIALOG
 document.querySelector("body").innerHTML += `
-    <dialog>
-        <article>
-            <div class="box">
-                <h1></h1>
-                <p></p>
-                <div class="buttons">
-                    <button type="button" style="--color: tomato;" onclick="closeDialog(false)">Cancelar</button>
-                    <button type="button" style="--color: blue;" onclick="closeDialog(true)">Ok</button>
-                </div>
-            </div>
-        </article>
-    </dialog>`
+     <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto" id="toastTitle"></strong>
+          <small id="toastComplement"></small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+      </div>
+    </div>`;
+
+const toastExecute = (title="Poeiria", message="", complement="", type="") => {
+    const $toastTitle = document.querySelector("#toastTitle");
+    const $toastComplement = document.querySelector("#toastComplement");
+    const $toastMessage = document.querySelector("#toastMessage");
     
-const $dialog = document.querySelector("dialog");
-const dialogTitle = $dialog.querySelector(".box h1");
-const dialogText = $dialog.querySelector(".box p");
-const dialogButtons = $dialog.querySelectorAll(".box .buttons button");
-let dialogResponse = undefined;
-let dialogType;
-
-const openDialog = {
-    alert: (title, error="Poeiria team") => {
-        dialogTitle.innerHTML = title;
-        dialogText.innerHTML = error;
-        dialogButtons[0].classList.add("hidden");
-        dialogType = 'alert';
-        $dialog.show();
-    },
-    confirm: (title, message="Poeiria team") => {
-        dialogTitle.innerHTML = title;
-        dialogText.innerHTML = message;
-        dialogType = 'confirm';
-        $dialog.show();
-
-        return new Promise((resolve) => {
-            const interval = setInterval(() => {
-                if(dialogResponse != undefined) {
-                    clearInterval(interval);
-                    const result = dialogResponse;
-                    dialogResponse = undefined;
-                    resolve(result);
-                }
-            })
-        })
-    }
+    $toastTitle.innerHTML = title;
+    $toastComplement.innerHTML = complement;
+    $toastMessage.innerHTML = message;
+    
+    const toastLive = document.getElementById('liveToast');
+    toastLive.classList.add(type);
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
+    toastBootstrap.show();
 }
 
-function closeDialog(response) {
-    dialogTitle.innerHTML = "";
-    dialogText.innerHTML = "";
-    dialogButtons[0].classList.remove("hidden");
-    $dialog.close();
-    if(dialogType != 'alert') return dialogResponse = response;
+const isAlert = {
+    toast: {
+        light: (title, message, complement) => toastExecute(title, message, complement, "text-bg-light"),
+        info: (title, message, complement) => toastExecute(title, message, complement, "text-bg-info"),
+        danger: (title, message, complement) => toastExecute(title, message, complement, "text-bg-danger"),
+        success: (title, message, complement) => toastExecute(title, message, complement, "text-bg-success"),
+    }
 }

@@ -31,9 +31,10 @@ $form.onsubmit = async (e) => {
         location = "../home/index.html";
     }
     catch (error) {
-        openDialog.alert(error);
+        console.error(error);
+        isAlert.toast.danger("Erro", error.message);
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 }
 
 const registration = async () => {

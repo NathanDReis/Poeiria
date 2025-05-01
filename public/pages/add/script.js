@@ -75,16 +75,16 @@ $form.addEventListener("submit", async (e) => {
                 }
             }
             else {
-                openDialog.alert("Imagem não reconhecida!");
+                isAlert.toast.danger("Erro", "Imagem não reconhecida.");
             }
         }
         else {
-            openDialog.alert("Usuário não possui as permissões!");
+            isAlert.toast.danger("Erro", "Usuário não possui as permissões.");
         }
     }
     catch (error) {
         console.error(error);
-        openDialog.alert("Erro registrar o arquivo!");
+        isAlert.toast.danger("Erro", "Erro ao registrar o arquivo.");
     }
     finally{isLoading.false()}
 })
@@ -116,9 +116,10 @@ async function getImage(page=1) {
         reset();
     }
     catch (error) {
-        openDialog.alert("Imagem", error);
+        console.error(error);
+        isAlert.toast.danger("Erro", error.message);
     }
-    finally{isLoading.false()}
+    finally { isLoading.false() }
 }
 $search.onkeydown = (event) => {
     if(event.key === 'Enter') {
