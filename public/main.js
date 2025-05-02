@@ -31,7 +31,7 @@ async function logout() {
     }
 }
 
-// DIALOG
+// TOAST
 document.querySelector("body").innerHTML += `
      <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -66,4 +66,26 @@ const isAlert = {
         danger: (title, message, complement) => toastExecute(title, message, complement, "text-bg-danger"),
         success: (title, message, complement) => toastExecute(title, message, complement, "text-bg-success"),
     }
+}
+
+// FORMAT TIMESTAMPS
+const zero = (number) => {
+    if(number < 10 && number >= 0) 
+        return `0${number}`
+
+    if(number < 0) 
+        return `-0${number*-1}`
+
+    return number;
+}
+const formatDate = (date) => {
+    const result = date.seconds 
+        ? new Date(date.seconds * 1000 + Math.floor(date.nanoseconds / 1000000))
+        : new Date(date);
+
+    const day = zero(result.getDate());
+    const month = zero(result.getMonth());
+    const year = zero(result.getFullYear());
+
+    return `${day}/${month}/${year}`;
 }

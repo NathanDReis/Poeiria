@@ -32,21 +32,16 @@ function poeiria(data) {
     
         data.sort((a,b) => a.title > b.title ? 1 : -1 );
         data.map((poeiria) => {
-            const card = document.createElement("div");
-            card.classList.add("card");
-            const img = document.createElement("div");
-            img.classList.add("img");
-            img.style = poeiria.url ? `--url: url(${poeiria.url})` : '--url: url(../../assets/book.webp)';
-            const h1 = document.createElement("h1");
-            h1.innerHTML = poeiria.title;
-    
-            card.onclick = () => {
-                location = `../read/index.html?doc=${poeiria.uid}`;
-            }
-    
-            card.appendChild(img);
-            card.appendChild(h1);
-            $box.appendChild(card);
+            $box.innerHTML += `
+            <div class="card" style="width: 18rem;">
+                <img src="${poeiria.url ?? '../../assets/book.webp'}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${poeiria.title}</h5>
+                    <p class="card-text">${poeiria.author}</p>
+                    <a href="../read/index.html?doc=${poeiria.uid}" class="btn btn-primary">Ler</a>
+                </div>
+            </div>
+            `;
         });
     }
 }

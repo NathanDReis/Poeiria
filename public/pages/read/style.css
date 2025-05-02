@@ -1,52 +1,30 @@
 @import url(../../main.css);
 
-* {
-    overflow: hidden;
-}
-
 main {
+    position: relative;
     width: 100dvw;
-    height: calc(100dvh - 69px);
+    min-height: calc(100dvh - 70px);
+    padding: 50px;
     display: grid;
     align-items: center;
     justify-content: center;
+    overflow: hidden auto;
+
+    .glass {
+        width: inherit;
+        height: 100%;
+        min-height: inherit;
+        position: absolute;
+        top: 0;
+        backdrop-filter: blur(10px);
+    }
+
+    background: var(--url);
+    background-position: center;
+    background-repeat: repeat;
 
     .box {
         width: 80dvw;
-        max-width: 400px;
-        max-height: calc(100dvh - 150px);
-        background: linear-gradient(90deg, #000000ad, #00000042), var(--url);
-        background-size: cover;
-        background-position: center;
-        color: #fff;
-        padding: 20px;
         display: grid;
-        align-items: center;
-        gap: 20px;
-        overflow: hidden auto;
-        cursor: default;
-        text-shadow: 0 0 5px #00000060;
-
-        h1 {
-            font-size: 2rem;
-            font-family: Arial, Helvetica, sans-serif;
-            letter-spacing: 2px;
-        }
-
-        p {
-            font-size: 1.1rem;
-            font-family: sans-serif;
-            letter-spacing: .5px;
-
-            svg {
-                fill: #fff;
-                width: 40px;
-            }
-
-            span {
-                text-shadow: 0 0 10px #fff4, 0 0 20px #fff6, 0 0 50px #fff7;
-                font-size: .7rem;
-            }
-        }
     }
 }

@@ -1,3 +1,4 @@
+const $main = document.querySelector("main");
 const $box = document.querySelector("main .box");
 const $isMyAccount = document.querySelectorAll(".isMyAccount");
 let poeiria;
@@ -6,11 +7,14 @@ let poeiria;
     try {
         isLoading.true();
         poeiria = await Poeiria.getDoc();
+        const date = formatDate(poeiria.createdAt);
+
+        $main.style = `--url: url(${poeiria.url})`;
         
-        $box.querySelector("h1").innerHTML = poeiria.title;
-        $box.querySelector("p").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="bi bi-quote" viewBox="0 0 16 16"><path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388q0-.527.062-1.054.093-.558.31-.992t.559-.683q.34-.279.868-.279V3q-.868 0-1.52.372a3.3 3.3 0 0 0-1.085.992 4.9 4.9 0 0 0-.62 1.458A7.7 7.7 0 0 0 9 7.558V11a1 1 0 0 0 1 1zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612q0-.527.062-1.054.094-.558.31-.992.217-.434.559-.683.34-.279.868-.279V3q-.868 0-1.52.372a3.3 3.3 0 0 0-1.085.992 4.9 4.9 0 0 0-.62 1.458A7.7 7.7 0 0 0 3 7.558V11a1 1 0 0 0 1 1z"/></svg>` 
-            + poeiria.lines.join("<br><br>") + ' "<br>' + `<span>${poeiria.author}<span>`;
-        $box.style = poeiria.url ? `--url: url(${poeiria.url})` : `--url: url(../../assets/book.webp)`;
+        $box.querySelector(".card-title").innerHTML = poeiria.title;
+        $box.querySelector(".card-text").innerHTML = `<i class="bi bi-quote"></i>`;
+        $box.querySelector(".card-text").innerHTML += poeiria.lines.join("<br><br>");
+        $box.querySelector(".card-footer").innerHTML = `<span>${poeiria.author}</span><span>${date}</span>`;
         
         $isMyAccount.forEach(async (item) => {
             const uid = await Poeiria.getMyUID();
@@ -22,12 +26,11 @@ let poeiria;
         })
 
         const $modalDelete = document.querySelector(".modal-delete");
-        if(!poeiria.published) {
-            document.querySelector("#restore").classList.remove("hidden");
-            $modalDelete.innerHTML = "Deseja realmente excluir este texto?";
-        } else {
-            $modalDelete.innerHTML = "Deseja realmente retirar a publicação?";
-        }
+        if(poeiria.published)
+            return $modalDelete.innerHTML = "Deseja realmente retirar a publicação?";
+
+        document.querySelector("#restore").classList.remove("hidden");
+        $modalDelete.innerHTML = "Deseja realmente excluir este texto?";
     }
     catch (error) {
         isAlert.toast.danger("Erro", "Arquivo não encontrado.");
