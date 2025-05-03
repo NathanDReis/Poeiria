@@ -5,13 +5,16 @@
         display: grid;
         align-items: center;
         justify-content: center;
-        gap: 25px;
 
         textarea {
             width: 80dvw;
             max-width: 500px;
-            padding: 10px;
             min-height: calc(100dvh - 490px);
+        }
+
+        .btn-w {
+            width: 80dvw !important;
+            max-width: 500px;
         }
     }
 
@@ -92,7 +95,7 @@ img {
 }
 
 img.focus {
-    border: .7px solid var(--inputCL);
-    filter: brightness(40%);
+    border-radius: 10px;
+    filter: brightness(90%);
     z-index: 1;
 }

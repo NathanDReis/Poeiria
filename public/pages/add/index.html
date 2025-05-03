@@ -39,20 +39,24 @@
 
             <section id="box">
                 <form id="form">
-                    <div class="mb-3">
+                    <div class="mb-3 p-3">
                         <label for="title" class="form-label">Título</label>
                         <input type="text" class="form-control" name="title" id="title" placeholder="Título" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 p-3">
                         <label for="text" class="form-label">Texto</label>
                         <textarea name="text" class="form-control" id="text" placeholder="Texto" required></textarea>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 p-3">
                         <label for="author" class="form-label">Autor</label>
                         <input type="text" name="author"  id="author" class="form-control" placeholder="Autor" required>
                     </div>
-                    <div class="mb-3 d-flex justify-content-center">
-                        <button type="submit" name="submit" class="btn btn-light row w-100" disabled>
+                    <div class="mb-3 p-3 d-grid justify-content-center gap-3">
+                        <button type="button" class="btn btn-light row w-100 btn-w">
+                            <i class="bi bi-image-fill"></i>
+                            Imagem                 
+                        </button>
+                        <button type="submit" name="submit" class="btn btn-light row w-100 btn-w" disabled>
                             <i class="bi bi-floppy"></i>     
                             Salvar                   
                         </button>

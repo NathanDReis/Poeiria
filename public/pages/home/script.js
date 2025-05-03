@@ -10,7 +10,6 @@ async function getAll() {
         isLoading.true();
 
         registers = await Poeiria.getAll();
-        console.log(registers);
         poeiria(registers);
         author(registers);
         
@@ -31,6 +30,7 @@ async function getAll() {
 
 function poeiria(data) {
     if(data) {
+        console.log(data.map(i => i.title));
         $box.innerHTML = '';
     
         data.map((poeiria) => {
@@ -89,4 +89,18 @@ const searchAuthor = (element) => {
     :poeiria(vazio.test(value) ? search($search) : registers.filter((register) => 
         (regexS.test(register.title) || regexS.test(register.lines.join(" "))) && regex.test(register.author)));
     localStorage.setItem("filter", JSON.stringify({search: $search.value, author: value}));
+}
+
+let isOrderByTitle = true;
+function orderByTitle() {
+    const filters = document.querySelectorAll(".orderByTitle i");
+
+    filters.forEach(element => element.classList.toggle("hidden"));
+    isOrderByTitle = !isOrderByTitle;
+
+    if (isOrderByTitle) {
+        return poeiria(registers.sort((a, b) => a.title.localeCompare(b.title)));
+    }
+    
+    return poeiria(registers.sort((a, b) => b.title.localeCompare(a.title)));
 }
