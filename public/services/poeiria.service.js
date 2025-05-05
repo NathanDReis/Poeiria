@@ -10,21 +10,27 @@ firebase.auth().onAuthStateChanged(user =>
   if(!user) {
     $isLoggedItems.forEach((item) => {
       item.classList.add("hidden");
-    })
+    });
     $isMyAccount.forEach((item) => {
       item.classList.add("hidden");
-    })
+    });
     $isNotLoggedItems.forEach((item) => {
       item.classList.remove("hidden");
-    })
+    });
+
+    setTimeout(() => {
+      $isMyAccount.forEach((item) => {
+        item.classList.add("hidden");
+      });
+    }, 100);
   }
   else {
     $isLoggedItems.forEach((item) => {
       item.classList.remove("hidden");
-    })
+    });
     $isNotLoggedItems.forEach((item) => {
       item.classList.add("hidden");
-    })
+    });
   }
 })
 
@@ -95,16 +101,31 @@ function formatedError(error) {
 
 const Poeiria = {
     getAll: async (published=true) => {
-      try {        
-        const snapshot = await firebase.firestore()
-          .collection(collectionName)
-          .where("published", "==", published)  
-          .orderBy('title', 'asc')
-          .get();
-        return [...snapshot.docs.map(doc => ({
-          ...doc.data(),
-          uid: doc.id
-        }))].filter(doc => !doc.deletedAt);
+      try {  
+        return new Promise((resolve) => {
+          firebase.auth().onAuthStateChanged(async (user) => {
+            const uid = user ? user.uid : '';
+
+            const snapshot = await firebase.firestore()
+              .collection(collectionName)
+              .where("published", "==", published)  
+              .orderBy('title', 'asc')
+              .get();
+
+
+            return resolve(
+              [...snapshot.docs.map(doc => ({
+                ...doc.data(),
+                uid: doc.id
+              }))].filter((doc) => {
+                if (published)
+                  return !doc.deletedAt;
+                
+                return !doc.deletedAt && doc.createdBy === uid;
+              })
+            ) 
+          });
+        });
       }
       catch (error) {
         throw formatedError(error);

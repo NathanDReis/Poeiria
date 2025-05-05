@@ -27,29 +27,29 @@ async function getAll() {
 }
 
 function poeiria(data) {
-    if(data) {
-        $box.innerHTML = '';
-    
-        data.sort((a,b) => a.title > b.title ? 1 : -1 );
-        data.map((poeiria) => {
-            $box.innerHTML += `
-            <div class="card" style="width: 18rem;">
-                <img src="${poeiria.url ?? '../../assets/book.webp'}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">${poeiria.title}</h5>
-                    <p class="card-text">${poeiria.author}</p>
-                    <a href="../read/index.html?doc=${poeiria.uid}" class="btn btn-primary">Ler</a>
-                </div>
+    if(!data) return;
+
+    $box.innerHTML = '';
+
+    data.map((poeiria) => {
+        $box.innerHTML += `
+        <div class="card" style="width: 18rem;">
+            <img src="${poeiria.url ?? '../../assets/book.webp'}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">${poeiria.title}</h5>
+                <p class="card-text">${poeiria.author}</p>
+                <a href="../read/index.html?doc=${poeiria.uid}" class="btn btn-primary">Ler</a>
             </div>
-            `;
-        });
-    }
+        </div>
+        `;
+    });
 }
 
 function author(data) {
     const authors = new Set([...data.map((d) => d.author)]);
     const authorsOrder = [...authors].sort((a,b) => a > b ? 1 : -1 );
     const $select = document.querySelector("#author");
+   
     authorsOrder.forEach((author) => {
         const option = document.createElement("option");
         option.value = author;
@@ -63,13 +63,15 @@ const search = (element) => {
     const regex = new RegExp(value, 'i');
 
     const $author = document.querySelector("#author");
-    const regexA = new RegExp($author.value, 'i');
-
-    vazio.test($author.value) 
-        ?poeiria(vazio.test(value) ? registers : registers.filter((register) => (regex.test(register.title) || regex.test(register.lines.join(" ")))))
-        :poeiria(vazio.test(value) ? searchAuthor($author) : registers.filter((register) => 
-            (regex.test(register.title) || regex.test(register.lines.join(" "))) && regexA.test(register.author)));
+    
     localStorage.setItem("filter-write", JSON.stringify({search: value, author: $author.value}));
+    
+    if (vazio.test($author.value))
+        return poeiria(vazio.test(value) ? registers : registers.filter((register) => (regex.test(register.title) || regex.test(register.lines.join(" ")))));
+    
+    const regexA = new RegExp($author.value, 'i');
+    poeiria(vazio.test(value) ? searchAuthor($author) : registers.filter((register) => 
+            (regex.test(register.title) || regex.test(register.lines.join(" "))) && regexA.test(register.author)));
 }
 
 const searchAuthor = (element) => {
@@ -77,11 +79,26 @@ const searchAuthor = (element) => {
     const regex = new RegExp(value, 'i');    
     
     const $search = document.querySelector("#search");
-    const regexS = new RegExp($search.value, 'i');
     
-    vazio.test($search.value) 
-    ?poeiria(vazio.test(value) ? registers : registers.filter((register) => regex.test(register.author)))
-    :poeiria(vazio.test(value) ? search($search) : registers.filter((register) => 
-        (regexS.test(register.title) || regexS.test(register.lines.join(" "))) && regex.test(register.author)));
     localStorage.setItem("filter-write", JSON.stringify({search: $search.value, author: value}));
+    
+    if (vazio.test($search.value))
+        return poeiria(vazio.test(value) ? registers : registers.filter((register) => regex.test(register.author)));
+    
+    const regexS = new RegExp($search.value, 'i');
+    poeiria(vazio.test(value) ? search($search) : registers.filter((register) => 
+        (regexS.test(register.title) || regexS.test(register.lines.join(" "))) && regex.test(register.author)));
+}
+
+let isOrderByTitle = true;
+function orderByTitle() {
+    const filters = document.querySelectorAll(".orderByTitle i");
+
+    filters.forEach(element => element.classList.toggle("hidden"));
+    isOrderByTitle = !isOrderByTitle;
+
+    if (isOrderByTitle)
+        return poeiria(registers.sort((a, b) => a.title.localeCompare(b.title)));
+    
+    return poeiria(registers.sort((a, b) => b.title.localeCompare(a.title)));
 }

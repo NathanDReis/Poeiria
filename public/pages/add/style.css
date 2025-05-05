@@ -11,80 +11,76 @@
             max-width: 500px;
             min-height: calc(100dvh - 490px);
         }
-
-        .btn-w {
-            width: 80dvw !important;
-            max-width: 500px;
-        }
     }
 
-    #images-box {
-        position: relative;
-        width: inherit;
-        max-width: inherit;
-        height: inherit;
-        max-height: inherit;
-        display: block;
+}
+
+#images-box {
+    position: relative;
+    width: inherit;
+    max-width: inherit;
+    height: inherit;
+    max-height: inherit;
+    display: block;
+    justify-content: center;
+    align-items: center;
+
+    .currentPage {
+        position: sticky;
+        top: 0;
+        background-color: var(--background);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100dvw;
+        height: 70px;
+        color: var(--inputCL);
+        gap: 20px;
+        z-index: 2;
+        
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+    }
+    
+    .controls {
+        top: 70px;
+        background-color: var(--background);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 70px;
+    }
+
+    #search {
+        width: 65dvw;
+        max-width: 400px;
+    }
+
+    #images-center {
+        width: 100dvw;
+        min-height: calc(100dvh - 70px - 240px);
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 200px;
+    }
+
+    #images {
+        width: 70dvw;
+        display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
 
-        .currentPage {
-            position: sticky;
-            top: 0;
-            background-color: var(--background);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100dvw;
-            height: 70px;
-            color: var(--inputCL);
-            gap: 20px;
-            z-index: 2;
-            
-            div {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-            }
-        }
-        
-        .controls {
-            top: 70px;
-            background-color: var(--background);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            height: 70px;
-        }
-
-        #search {
-            width: 65dvw;
-            max-width: 400px;
-        }
-
-        #images-center {
-            width: 100dvw;
-            min-height: calc(100dvh - 70px - 240px);
-            display: grid;
-            align-items: center;
-            justify-content: center;
-            padding-bottom: 200px;
-        }
-
-        #images {
-            width: 70dvw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-
-            img {
-                flex-grow: 1;
-                max-width: 300px;
-            }
+        img {
+            flex-grow: 1;
+            max-width: 300px;
         }
     }
 }

@@ -58,32 +58,30 @@ async function deleteData() {
 }
 
 function clipboard() {
-    if(navigator.clipboard) {    
-        const $clipboards = document.querySelectorAll("#clipboard i");
-        
-        navigator.clipboard.writeText(`${poeiria.title}\n\n"${poeiria.lines.join("\n")}"\n\n${poeiria.author} | (https://poeiria.web.app/pages/read/index.html?doc=${poeiria.uid})`)
-        .then(() => {
-            $clipboards[0].classList.add("hidden");
-            $clipboards[1].classList.remove("hidden");
-            $clipboards[2].classList.add("hidden");
-            isAlert.toast.success("Sucesso", "Texto copiado com sucesso!")
-        })
-        .catch(() => {
-            $clipboards[0].classList.add("hidden");
+    if (!navigator.clipboard)   
+        return isAlert.toast.danger("Erro Cópia", "Seu navegador não suporta a API Clipboard.");
+    
+    const $clipboards = document.querySelectorAll("#clipboard i");
+    
+    navigator.clipboard.writeText(`${poeiria.title}\n\n"${poeiria.lines.join("\n")}"\n\n${poeiria.author} | (https://poeiria.web.app/pages/read/index.html?doc=${poeiria.uid})`)
+    .then(() => {
+        $clipboards[0].classList.add("hidden");
+        $clipboards[1].classList.remove("hidden");
+        $clipboards[2].classList.add("hidden");
+        isAlert.toast.success("Sucesso", "Texto copiado com sucesso!")
+    })
+    .catch(() => {
+        $clipboards[0].classList.add("hidden");
+        $clipboards[1].classList.add("hidden");
+        $clipboards[2].classList.remove("hidden");
+    })
+    .finally(() => {
+        setTimeout(() => {
+            $clipboards[0].classList.remove("hidden");
             $clipboards[1].classList.add("hidden");
-            $clipboards[2].classList.remove("hidden");
-        })
-        .finally(() => {
-            setTimeout(() => {
-                $clipboards[0].classList.remove("hidden");
-                $clipboards[1].classList.add("hidden");
-                $clipboards[2].classList.add("hidden");
-            },1000);
-        })
-    }
-    else {
-        isAlert.toast.danger("Erro Cópia", "Seu navegador não suporta a API Clipboard.");
-    }
+            $clipboards[2].classList.add("hidden");
+        },1000);
+    })
 }
 
 function locationDoc() {

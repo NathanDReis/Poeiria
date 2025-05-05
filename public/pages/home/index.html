@@ -33,22 +33,16 @@
             </nav>
         </header>
 
-        <article class="container-fluid mt-lg-2 p-3">
-            <div class="row gap-3">
-                <div class="col-auto">
-                    <select class="form-select" id="author" onchange="searchAuthor(this)">
-                        <option value="">Todos</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input type="search" class="form-control" id="search" oninput="search(this)" placeholder="Pesquisar" autocomplete="off">
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-light orderByTitle" onclick="orderByTitle()">
-                        <i class="bi bi-sort-alpha-up-alt"></i>
-                        <i class="bi bi-sort-alpha-down-alt hidden"></i>
-                    </button>
-                </div>
+        <article class="container-fluid mt-lg-2 p-3 isLoggedItems">
+            <div class="d-flex gap-3 justify-content-left flex-wrap align-items-center p-3">
+                <select class="form-select" id="author" onchange="searchAuthor(this)" style="max-width: 500px;">
+                    <option value="">Todos</option>
+                </select>
+                <input type="search" class="form-control" id="search" oninput="search(this)" placeholder="Pesquisar" autocomplete="off" style="max-width: 500px;">
+                <button type="button" class="btn btn-outline-dark orderByTitle" onclick="orderByTitle()">
+                    <i class="bi bi-sort-alpha-up-alt"></i>
+                    <i class="bi bi-sort-alpha-down-alt hidden"></i>
+                </button>
             </div>
         </article>
         

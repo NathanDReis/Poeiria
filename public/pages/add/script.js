@@ -1,6 +1,6 @@
 const $form = document.querySelector("form");
 const $search = document.querySelector("#search");
-const $images = document.querySelector("main #images");
+const $images = document.querySelector("#images");
 const vazio = /^\s*$/; 
 let poeiria;
 let urlImage = "";
@@ -40,53 +40,49 @@ $form.addEventListener("input", () => {
 })
 
 $form.addEventListener("submit", async (e) => {
+    let data = {};
+
     try {
         e.preventDefault();
         isLoading.true();
         const uid = await Poeiria.getMyUID();
     
-        if(uid) {
-            if((vazio.test(urlImage) && vazio.test($search.value)) || (!vazio.test(urlImage) && !vazio.test($search.value))) {
-            
-                const data = {
-                    updatedAt: (new Date()).toDateString(),
-                    author: $form.author.value,
-                    title: $form.title.value,
-                    lines: $form.text.value.split("\n")
-                }
-                const regexUrl = /^\s*$/;
-                !regexUrl.test(urlImage) ? data['url'] = urlImage : null;
-                !regexUrl.test($search.value) ? data['search'] = $search.value : !regexUrl.test(urlImage) ? urlImage : null;
-            
-                
-                if(!poeiria) {
-                    data['createdBy'] = uid;
-                    data['createdAt'] = new Date().toDateString();
-                    data['published'] = false;
-                    const docId = await Poeiria.addDoc(data);
-                    reset();
-                    location = `../read/index.html?doc=${docId}`;
-                }
-                else {
-                    await Poeiria.setDoc(data);
-                    const docId = new URLSearchParams(location.search).get('doc');
-                    reset();
-                    location = `../read/index.html?doc=${docId}`;
-                }
-            }
-            else {
-                isAlert.toast.danger("Erro", "Imagem não reconhecida.");
-            }
+        if(!uid)
+            return isAlert.toast.danger("Erro", "Usuário não possui as permissões.");
+
+        const completedImage = (vazio.test(urlImage) && vazio.test($search.value));
+        const emptyImage = (!vazio.test(urlImage) && !vazio.test($search.value));
+        if(!(completedImage || emptyImage))
+            return isAlert.toast.danger("Erro", "Imagem não reconhecida.");
+
+        data = {
+            updatedAt: (new Date()).toDateString(),
+            author: $form.author.value,
+            title: $form.title.value,
+            lines: $form.text.value.split("\n")
         }
-        else {
-            isAlert.toast.danger("Erro", "Usuário não possui as permissões.");
-        }
+        const regexUrl = /^\s*$/;
+        !regexUrl.test(urlImage) ? data['url'] = urlImage : null;
+        !regexUrl.test($search.value) ? data['search'] = $search.value : !regexUrl.test(urlImage) ? urlImage : null;
+    
+        if(poeiria) 
+            return await Poeiria.setDoc(data);
+        
+        data['createdBy'] = uid;
+        data['createdAt'] = new Date().toDateString();
+        data['published'] = false;
+        return await Poeiria.addDoc(data);
     }
     catch (error) {
         console.error(error);
         isAlert.toast.danger("Erro", "Erro ao registrar o arquivo.");
     }
-    finally{isLoading.false()}
+    finally {
+        reset();
+        isLoading.false();
+        localStorage.setItem("filter-write", JSON.stringify({search: data.title, author: data.author}));
+        location = `../write/index.html`;
+    }
 })
 
 async function getImage(page=1) {
@@ -130,30 +126,26 @@ $search.onkeydown = (event) => {
 async function renderImage(page='media') {
     $images.innerHTML = "";
 
-    if(page !== 'media') {
-        getImage(currentMedia[page]);
-    }
-    else {
-        document.querySelector(".current h6").innerHTML = currentMedia['media'].page;
-        
-        currentMedia['media'].photos.forEach((photo) => {
-            const img = document.createElement("img");
-            img.src = photo.src.large;
-            img.onclick = () => {
-                const $imgs = $images.querySelectorAll("img");
-                $imgs.forEach((i) => i.classList.remove("focus"));
-                
-                if(urlImage === img.src) {
-                    urlImage = "";
-                }
-                else {
-                    urlImage = img.src;
-                    img.classList.add("focus");
-                }
-            }
-            $images.appendChild(img);
-        })
-    }
+    if(page !== 'media') 
+        return getImage(currentMedia[page]);
+
+    document.querySelector(".current h6").innerHTML = currentMedia['media'].page;
+    
+    currentMedia['media'].photos.forEach((photo) => {
+        const img = document.createElement("img");
+        img.src = photo.src.large;
+        img.onclick = () => {
+            const $imgs = $images.querySelectorAll("img");
+            $imgs.forEach((i) => i.classList.remove("focus"));
+            
+            if(urlImage === img.src)
+               return urlImage = "";
+            
+            urlImage = img.src;
+            img.classList.add("focus");
+        }
+        $images.appendChild(img);
+    })
 }
 
 function page(next) {

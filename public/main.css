@@ -116,6 +116,7 @@ dialog {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    z-index: 9000 !important;
 }
 
 .loader {
