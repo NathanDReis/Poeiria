@@ -3,12 +3,5 @@
 form {
     display: grid;
     align-items: center;
-    gap: 30px;
     text-align: center;
-
-    .buttons {
-        display: grid;
-        align-items: center;
-        gap: 20px;
-    }
 }

@@ -20,16 +20,17 @@
 
         <main class="d-flex justify-content-center align-items-center">
             <form style="width: 80dvw; max-width: 500px;">
-                <h1 class="display-5">
+                <h1 class="display-5 overflow-hidden d-grid">
                     Entrar
+                    <a 
+                        class="link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover overflow-hidden"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#confirmBackdrop"
+                        style="font-size: 1rem;"
+                    >
+                        Novo no site? Registre-se
+                    </a>
                 </h1>
-                <a 
-                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                    data-bs-toggle="modal" 
-                    data-bs-target="#confirmBackdrop"
-                >
-                    Novo no site? Registre-se
-                </a>
 
                 <div class="mb-3 p-3 text-start">
                     <label for="title" class="form-label">Email:</label>
@@ -45,13 +46,17 @@
                     Esqueceu a senha?
                 </a>
 
-                <div class="buttons">
-                    <button type="submit" name="submit" class="btn btn-light" disabled>
-                        Entrar
+                <div class="mb-3 p-3 d-flex justify-content-between gap-3">
+                    <button 
+                        type="submit" 
+                        name="submit"
+                        class="btn btn-light w-100"
+                        disabled
+                    >
+                        Entrar                 
                     </button>
-                    <span style="font-size: .7rem;">OU</span>
-                    <button type="button" class="btn btn-light d-flex align-items-center justify-content-evenly" id="loginGoogle">
-                        Entrar com Google
+                    <button type="button" class="btn btn-light w-100"  id="loginGoogle">
+                        Google                   
                     </button>
                 </div>
             </form>

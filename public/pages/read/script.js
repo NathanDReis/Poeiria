@@ -99,5 +99,5 @@ async function published() {
     catch (error) {
         isAlert.toast.danger("Erro", "Não foi possível publicar este texto.");
     }
-    finally{ isLoading.false() }
+    finally { isLoading.false() }
 }
