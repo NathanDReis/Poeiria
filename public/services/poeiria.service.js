@@ -1,7 +1,6 @@
 const collectionName = "poeiria";
-const hashUID = "XkqfSqDQado4b8XzAAT0";
 
-firebase.auth().onAuthStateChanged(user =>
+auth.onAuthStateChanged(user =>
 {
   const $isLoggedItems = document.querySelectorAll(".isLoggedItems");
   const $isNotLoggedItems = document.querySelectorAll(".isNotLoggedItems");
@@ -40,7 +39,7 @@ async function hash() {
   for(let i = 0;i < str.length; i++) {
       hash.push(str.charCodeAt(i));
   }
-  await firebase.firestore().collection(collectionName).doc(hashUID).update({
+  await firestore.collection(collectionName).doc(hashUID).update({
     hash: hash.join("")
   });
 }
@@ -100,30 +99,35 @@ function formatedError(error) {
 }
 
 const Poeiria = {
-    getAll: async (published=true) => {
+    getAll: async (myPoeiria) => {
       try {  
         return new Promise((resolve) => {
-          firebase.auth().onAuthStateChanged(async (user) => {
+          auth.onAuthStateChanged(async (user) => {
             const uid = user ? user.uid : '';
 
-            const snapshot = await firebase.firestore()
-              .collection(collectionName)
-              .where("published", "==", published)  
-              .orderBy('title', 'asc')
-              .get();
+            let snapshot;
+            if (myPoeiria) {
+              snapshot = await firestore
+                .collection(collectionName)
+                .where("createdBy", "==", uid)  
+                .where("deletedAt", "==", null)  
+                .orderBy('title', 'asc')
+                .get();
+            } else {
+              snapshot = await firestore
+                .collection(collectionName)
+                .where("published", "==", true) 
+                .where("deletedAt", "==", null)  
+                .orderBy('title', 'asc')
+                .get();
+            }
 
-
-            return resolve(
-              [...snapshot.docs.map(doc => ({
-                ...doc.data(),
-                uid: doc.id
-              }))].filter((doc) => {
-                if (published)
-                  return !doc.deletedAt;
-                
-                return !doc.deletedAt && doc.createdBy === uid;
-              })
-            ) 
+            const dadosFormatados = [...snapshot.docs.map(doc => ({
+              ...doc.data(),
+              uid: doc.id
+            }))];
+            
+            return resolve(dadosFormatados); 
           });
         });
       }
@@ -133,7 +137,7 @@ const Poeiria = {
     },
     addDoc: async (data) => {
       try {
-        const docRef = await exe(firebase.firestore().collection(collectionName).add(data));      
+        const docRef = await exe(firestore.collection(collectionName).add(data));      
         return (await docRef.get()).id;
       } catch (error) {
         throw formatedError(error);
@@ -142,7 +146,7 @@ const Poeiria = {
     getDoc: async () => {
       try {
         const docId = new URLSearchParams(location.search).get('doc');
-        const snapshot = await firebase.firestore().collection(collectionName).doc(docId).get();
+        const snapshot = await firestore.collection(collectionName).doc(docId).get();
         return snapshot.data();
       }
       catch (error) {
@@ -152,7 +156,7 @@ const Poeiria = {
     setDoc: async (newData, uid=false) => {
       try {
         const docId = uid ? uid : new URLSearchParams(location.search).get('doc');
-        return await exe(firebase.firestore().collection(collectionName).doc(docId).update(newData));
+        return await exe(firestore.collection(collectionName).doc(docId).update(newData));
       }
       catch (error) {
         throw formatedError(error);
@@ -161,7 +165,7 @@ const Poeiria = {
     noPublishedDoc: async () => {
       try {
         const docId = new URLSearchParams(location.search).get('doc');
-        return await exe(firebase.firestore().collection(collectionName).doc(docId).update({
+        return await exe(firestore.collection(collectionName).doc(docId).update({
           published: false
         }));
       } catch (error) {
@@ -171,7 +175,7 @@ const Poeiria = {
     deleteDoc: async () => {
       try {
         const docId = new URLSearchParams(location.search).get('doc');
-        return await exe(firebase.firestore().collection(collectionName).doc(docId).update({
+        return await exe(firestore.collection(collectionName).doc(docId).update({
           deletedAt: new Date().toDateString()
         }));      
       } catch (error) {
@@ -180,7 +184,7 @@ const Poeiria = {
     },
     createUser: async (email, password) => {
       try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        await auth.createUserWithEmailAndPassword(email, password);
       }
       catch (error) {
         throw formatedError(error);
@@ -188,7 +192,7 @@ const Poeiria = {
     },
     recoverPassword: async (email) => {
       try {
-        await firebase.auth().sendPasswordResetEmail(email);
+        await auth.sendPasswordResetEmail(email);
       }
       catch (error) {
         throw formatedError(error);
@@ -196,21 +200,21 @@ const Poeiria = {
     },
     login: async (email, password) => {
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);        
+        await auth.signInWithEmailAndPassword(email, password);        
       } catch (error) {
         throw formatedError(error); 
       }
     },
     logout: async () => {
       try {
-        await firebase.auth().signOut();        
+        await auth.signOut();        
       } catch (error) {
         throw formatedError(error); 
       }
     },
     getMyUID: () => {
       return new Promise((resolve) => {
-        firebase.auth().onAuthStateChanged(user => {
+        auth.onAuthStateChanged(user => {
             resolve(user ? user.uid : '');
         })
       })
@@ -218,7 +222,7 @@ const Poeiria = {
     loginG: async () => {
       try {
         const provider = new firebase.auth.GoogleAuthProvider();
-        await firebase.auth().signInWithPopup(provider);
+        await auth.signInWithPopup(provider);
         location = "../home/index.html";
       }
       catch (error) {

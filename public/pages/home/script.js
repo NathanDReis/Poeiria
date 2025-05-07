@@ -10,6 +10,7 @@ async function getAll() {
         isLoading.true();
 
         registers = await Poeiria.getAll();
+        
         poeiria(registers);
         author(registers);
         

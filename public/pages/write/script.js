@@ -2,28 +2,42 @@ const $box = document.querySelector("#cards");
 const $author = document.querySelector("#author");
 const vazio = /^\s*$/; 
 let registers = [];
-let filterSaved;
+let registersCache = [];
+let published = true;
 
 async function getAll() {
     try {
         isLoading.true();
-        registers = await Poeiria.getAll(false);
-        poeiria(registers);
-        author(registers);
+        registersCache = await Poeiria.getAll(true);
         
-        // Filter
-        filterSaved = JSON.parse(localStorage.getItem("filter-write"));
-        if(filterSaved && (!vazio.test(filterSaved.search) || !vazio.test(filterSaved.author))) {
-            document.querySelector("#search").value = filterSaved.search;
-            document.querySelector("#author").value = filterSaved.author;
-            search(document.querySelector("#search"));
-        } 
+        filterPublished();
+        exe();
+        filterSaved();
     }
     catch (error) {
         console.error(error);
         isAlert.toast.danger("Erro", "Não foi possível encontrar textos no momento.");
     }
     finally { isLoading.false() }
+}
+
+function filterSaved() {
+    // Filter
+    const filterSaved = JSON.parse(localStorage.getItem(published ? "filter-write-p" : "filter-write"));
+
+    if(filterSaved && (!vazio.test(filterSaved.search) || !vazio.test(filterSaved.author))) {
+        document.querySelector("#search").value = filterSaved.search;
+        document.querySelector("#author").value = filterSaved.author;
+        return search(document.querySelector("#search"));
+    } 
+
+    document.querySelector("#search").value = "";
+    document.querySelector("#author").value = "";
+}
+
+function exe() {
+    poeiria(registers);
+    author(registers);
 }
 
 function poeiria(data) {
@@ -49,7 +63,13 @@ function author(data) {
     const authors = new Set([...data.map((d) => d.author)]);
     const authorsOrder = [...authors].sort((a,b) => a > b ? 1 : -1 );
     const $select = document.querySelector("#author");
+    $select.innerHTML = "";
    
+    const option = document.createElement("option");
+    option.value = "";
+    option.innerHTML = "Todos";
+    $select.appendChild(option);
+
     authorsOrder.forEach((author) => {
         const option = document.createElement("option");
         option.value = author;
@@ -64,7 +84,7 @@ const search = (element) => {
 
     const $author = document.querySelector("#author");
     
-    localStorage.setItem("filter-write", JSON.stringify({search: value, author: $author.value}));
+    localStorage.setItem(published ? "filter-write-p" : "filter-write", JSON.stringify({search: value, author: $author.value}));
     
     if (vazio.test($author.value))
         return poeiria(vazio.test(value) ? registers : registers.filter((register) => (regex.test(register.title) || regex.test(register.lines.join(" ")))));
@@ -80,7 +100,7 @@ const searchAuthor = (element) => {
     
     const $search = document.querySelector("#search");
     
-    localStorage.setItem("filter-write", JSON.stringify({search: $search.value, author: value}));
+    localStorage.setItem(published ? "filter-write-p" : "filter-write", JSON.stringify({search: $search.value, author: value}));
     
     if (vazio.test($search.value))
         return poeiria(vazio.test(value) ? registers : registers.filter((register) => regex.test(register.author)));
@@ -94,11 +114,26 @@ let isOrderByTitle = true;
 function orderByTitle() {
     const filters = document.querySelectorAll(".orderByTitle i");
 
-    filters.forEach(element => element.classList.toggle("hidden"));
+    
     isOrderByTitle = !isOrderByTitle;
 
-    if (isOrderByTitle)
+    if (isOrderByTitle) {
+        filters[0].classList.remove("hidden");
+        filters[1].classList.add("hidden");
         return poeiria(registers.sort((a, b) => a.title.localeCompare(b.title)));
-    
+    }
+
+    filters[0].classList.add("hidden");
+    filters[1].classList.remove("hidden");
     return poeiria(registers.sort((a, b) => b.title.localeCompare(a.title)));
+}
+
+function filterPublished(event = { checked: true }) {
+    published = event.checked;
+    
+    registers = registersCache.filter(i => i.published === published);
+    exe();
+    isOrderByTitle = false;
+    orderByTitle();
+    filterSaved();
 }

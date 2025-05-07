@@ -24,11 +24,11 @@ async function logout() {
     try {
         isLoading.true();
         await Poeiria.logout();
-        isLoading.false();
     }
     catch (error) {
         isAlert.toast.danger("Erro", error);
     }
+    finally { isLoading.false() }
 }
 
 // TOAST
