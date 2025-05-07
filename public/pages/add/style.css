@@ -47,25 +47,22 @@
     }
 
     .search-container {
-        height: 100px;
+        height: 60px;
         width: 100dvw;
-        background: transparent;
+        background: #0001;
         backdrop-filter: blur(10px);
         top: 70px;
+        left: 0;
         z-index: 999;
     }
 
-    .search-box {
-        height: 100px;
-    }
-
     #search {
-        width: 65dvw;
+        width: 40dvw;
         max-width: 700px;
     }
 
     .filters {
-        margin-top: 100px !important;
+        margin-top: 60px !important;
     }
 
     #images-center {

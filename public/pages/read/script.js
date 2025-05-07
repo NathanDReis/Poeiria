@@ -3,7 +3,7 @@ const $box = document.querySelector("main .box");
 const $isMyAccount = document.querySelectorAll(".isMyAccount");
 let poeiria;
 
-(async () => {
+async function getAll() {
     try {
         isLoading.true();
         poeiria = await Poeiria.getDoc();
@@ -36,7 +36,7 @@ let poeiria;
         isAlert.toast.danger("Erro", "Arquivo não encontrado.");
     }
     finally { isLoading.false() }
-})()
+}
 
 async function deleteData() {
     try {
@@ -63,7 +63,7 @@ function clipboard() {
     
     const $clipboards = document.querySelectorAll("#clipboard i");
     
-    navigator.clipboard.writeText(`${poeiria.title}\n\n"${poeiria.lines.join("\n")}"\n\n${poeiria.author} | (https://poeiria.web.app/pages/read/index.html?doc=${poeiria.uid})`)
+    navigator.clipboard.writeText(`${poeiria.title}\n\n"${poeiria.lines.join("\n")}"\n\n${poeiria.author} \nhttps://poeiria.web.app/pages/home/index.html`)
     .then(() => {
         $clipboards[0].classList.add("hidden");
         $clipboards[1].classList.remove("hidden");
