@@ -83,28 +83,47 @@
                 </div>
                 <div class="modal-body">
                     <div id="images-box">
-                        <div class="mb-3 d-grid justify-content-center">
-                            <label for="search" class="form-label d-flex justify-content-center mt-5">
-                                <div class="current">
-                                    <h6 class="overflow-hidden">1</h6>
+                        <div class="d-grid justify-content-center position-fixed search-container">
+                            <div class="overflow-hidden d-flex align-items-center justify-content-around search-box">
+                                <button type="button" class="btn btn-light" onclick="page()">
+                                    <i class="bi bi-skip-backward"></i>
+                                </button>
+                                <div class="input-group p-3">
+                                    <input type="text" id="search" class="form-control" placeholder="Pesquisar imagem" autocomplete="off">
+                                    <span class="input-group-text d-flex align-items-center justify-content-center" id="basic-addon2">
+                                        <span class="overflow-hidden current">1</span>
+                                        <span class="overflow-hidden">:</span>
+                                        <span class="overflow-hidden max">0</span>
+                                    </span>
                                 </div>
-                                <div>
-                                    <h6 class="overflow-hidden">:</h6>
-                                </div>
-                                <div class="max">
-                                    <h6 class="overflow-hidden">0</h6>
-                                </div>
-                            </label>
-                            <div class="controls">
-                                <span onclick="page()" style="cursor: pointer;">
-                                    <i class="bi bi-caret-left"></i>
-                                </span>
-                                <input type="text" id="search" class="form-control" placeholder="Pesquisar imagem" autocomplete="off">
-                                <span onclick="page(true)" style="cursor: pointer;" class="rotate">
-                                    <i class="bi bi-caret-left"></i>
-                                </span>
+                                <button type="button" class="btn btn-light rotate" onclick="page(true)">
+                                    <i class="bi bi-skip-backward"></i>
+                                </button>
                             </div>                    
                         </div>
+
+                        <article class="container-fluid mt-lg-2 p-3 align-items-center filters">
+                            <div class="d-flex gap-3 justify-content-center flex-wrap align-items-center p-3">
+                                <select class="form-select" id="orientation" style="max-width: 500px;">
+                                    <option value="all">Todas as orientações</option>
+                                    <option value="landscape">Horizontal</option>
+                                    <option value="portrait">Vertical</option>
+                                    <option value="square">Quadrado</option>
+                                </select>
+                                <select class="form-select" id="size" style="max-width: 500px;">
+                                    <option value="all">Todos os tamanhos</option>
+                                    <option value="large">Grande</option>
+                                    <option value="medium">Médio</option>
+                                    <option value="small">Pequeno</option>
+                                </select>
+                                <div class="input-group" style="max-width: 500px;">
+                                    <div class="input-group-text">
+                                      <input class="form-check-input mt-0" type="checkbox" value="" id="check-color">
+                                    </div>
+                                    <input type="color" class="form-control form-control-color" id="color">
+                                </div>
+                            </div>
+                        </article>
 
                         <div id="images-center">
                             <div id="images">

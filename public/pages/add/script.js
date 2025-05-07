@@ -30,8 +30,8 @@ const reset = () => {
     $search.value = "";
     urlImage = "";
     $images.innerHTML = "";
-    document.querySelector(".current h6").innerHTML = "";
-    document.querySelector(".max h6").innerHTML = "";
+    document.querySelector(".current").innerHTML = "";
+    document.querySelector(".max").innerHTML = "";
     $form.reset();
 }
 
@@ -92,7 +92,18 @@ async function getImage(page=1) {
         isLoading.true();
         
         if(!vazio.test($search.value)) {
-            const result = await fetch(`https://api.pexels.com/v1/search/?locale=pt-BR&page=${page}&per_page=16&query=${$search.value}`, {
+            let size = document.querySelector("#size");
+            let orientation = document.querySelector("#orientation");
+            let color = document.querySelector("#color");
+            let isColor = document.querySelector("#check-color");
+            
+            size = size.value != 'all' ? `&size=${size.value}` : '';
+            orientation = orientation.value != 'all' ? `&orientation=${orientation.value}` : '';
+            color = isColor.checked ? `&color=${color.value.toString().replace("#","")}` : '';
+
+            const url = `https://api.pexels.com/v1/search/?locale=pt-BR&page=${page}&per_page=16&query=${$search.value}${size}${orientation}${color}`;
+            console.log(url);
+            const result = await fetch(url, {
                 headers: {
                     Authorization: "Tjv2x3OIQnFfuvJtPWnXMmlZbfHKBPfoSvOwboq7Hckk5VwIptQY22gs"
                 }
@@ -107,7 +118,7 @@ async function getImage(page=1) {
             currentMedia['prevMedia'] = prevPage;
             currentMedia['nextMedia'] = nextPage;
             currentMedia['numPages'] = numPages;
-            document.querySelector(".max h6").innerHTML = currentMedia['numPages'];
+            document.querySelector(".max").innerHTML = currentMedia['numPages'];
             
             return renderImage();
         }
@@ -131,7 +142,7 @@ async function renderImage(page='media') {
     if(page !== 'media') 
         return getImage(currentMedia[page]);
 
-    document.querySelector(".current h6").innerHTML = currentMedia['media'].page;
+    document.querySelector(".current").innerHTML = currentMedia['media'].page;
     
     currentMedia['media'].photos.forEach((photo) => {
         const img = document.createElement("img");
