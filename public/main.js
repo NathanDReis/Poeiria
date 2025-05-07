@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    [...tooltipTriggerList].map(tooltipTriggerEl =>
+      new bootstrap.Tooltip(tooltipTriggerEl)
+    );
+});  
+
 const createLoading = () => {
     const $html = document.querySelector("html");
     const loadingDiv = document.createElement("div");
