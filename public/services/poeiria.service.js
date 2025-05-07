@@ -33,31 +33,6 @@ auth.onAuthStateChanged(user =>
   }
 })
 
-async function hash() {
-  const str = new Date().toISOString()
-  const hash = [];
-  for(let i = 0;i < str.length; i++) {
-      hash.push(str.charCodeAt(i));
-  }
-  await firestore.collection(collectionName).doc(hashUID).update({
-    hash: hash.join("")
-  });
-}
-
-async function exe(query) {
-  try {
-    if(query) {
-      const response = await query;
-      await hash();
-      return response;
-    }
-    throw error;
-  }
-  catch (error) {
-    throw error;
-  }
-} 
-
 function formatedError(error) {
   switch(error.code) {
     case 'auth/invalid-login-credentials':
@@ -137,7 +112,7 @@ const Poeiria = {
     },
     addDoc: async (data) => {
       try {
-        const docRef = await exe(firestore.collection(collectionName).add(data));      
+        const docRef = await firestore.collection(collectionName).add(data);      
         return (await docRef.get()).id;
       } catch (error) {
         throw formatedError(error);
@@ -156,7 +131,7 @@ const Poeiria = {
     setDoc: async (newData, uid=false) => {
       try {
         const docId = uid ? uid : new URLSearchParams(location.search).get('doc');
-        return await exe(firestore.collection(collectionName).doc(docId).update(newData));
+        return await firestore.collection(collectionName).doc(docId).update(newData);
       }
       catch (error) {
         throw formatedError(error);
@@ -165,9 +140,9 @@ const Poeiria = {
     noPublishedDoc: async () => {
       try {
         const docId = new URLSearchParams(location.search).get('doc');
-        return await exe(firestore.collection(collectionName).doc(docId).update({
+        return await firestore.collection(collectionName).doc(docId).update({
           published: false
-        }));
+        });
       } catch (error) {
         throw formatedError(error);
       }
@@ -175,9 +150,9 @@ const Poeiria = {
     deleteDoc: async () => {
       try {
         const docId = new URLSearchParams(location.search).get('doc');
-        return await exe(firestore.collection(collectionName).doc(docId).update({
+        return await firestore.collection(collectionName).doc(docId).update({
           deletedAt: new Date().toDateString()
-        }));      
+        });      
       } catch (error) {
         throw formatedError(error);
       }

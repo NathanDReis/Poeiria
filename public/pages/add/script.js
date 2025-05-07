@@ -57,6 +57,7 @@ $form.addEventListener("submit", async (e) => {
 
         data = {
             updatedAt: (new Date()).toDateString(),
+            deletedAt: null,
             author: $form.author.value,
             title: $form.title.value,
             lines: $form.text.value.split("\n")
@@ -70,6 +71,7 @@ $form.addEventListener("submit", async (e) => {
         
         data['createdBy'] = uid;
         data['createdAt'] = new Date().toDateString();
+        data['updatedAt'] = null;
         data['published'] = false;
         return await Poeiria.addDoc(data);
     }
