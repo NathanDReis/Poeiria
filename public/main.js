@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    /* TOOLTIP Bootstrap */
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     [...tooltipTriggerList].map(tooltipTriggerEl =>
       new bootstrap.Tooltip(tooltipTriggerEl)
@@ -95,4 +96,35 @@ const formatDate = (date) => {
     const year = zero(result.getFullYear());
 
     return `${day}/${month}/${year}`;
+}
+
+/* VOLTAR */
+function backPage(urlDefault) {
+    if (urlDefault) return location = `../${urlDefault}/index.html`;
+
+    let url = document.referrer;
+    if (url.length === 0) return location = '../home/index.html';
+
+    const docId = new URLSearchParams(location.search).get('doc');
+    if (!docId) return location = url;
+
+    if (url.includes("write")) {
+        url = '../write/index.html?view=' + docId;
+    }
+
+    if (url.includes("home")) {
+        url = '../home/index.html?view=' + docId;
+    }
+
+    location = url;
+}
+
+function scroll() {
+    const viewId = new URLSearchParams(location.search).get('view');
+    if (!viewId) return;
+    
+    const docView = document.getElementById(viewId);
+    if (!docView) return;
+
+    docView.scrollIntoView({ behavior: "smooth", block: "center"});
 }

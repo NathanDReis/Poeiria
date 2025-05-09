@@ -3,7 +3,7 @@ const $author = document.querySelector("#author");
 const vazio = /^\s*$/; 
 let registers = [];
 let registersCache = [];
-let published = true;
+let published = false;
 
 async function getAll() {
     try {
@@ -47,7 +47,7 @@ function poeiria(data) {
 
     data.map((poeiria) => {
         $box.innerHTML += `
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;" id="${poeiria.uid}">
             <img src="${poeiria.url ?? '../../assets/book.webp'}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${poeiria.title}</h5>
@@ -57,6 +57,8 @@ function poeiria(data) {
         </div>
         `;
     });
+
+    scroll();
 }
 
 function author(data) {
@@ -128,7 +130,7 @@ function orderByTitle() {
     return poeiria(registers.sort((a, b) => b.title.localeCompare(a.title)));
 }
 
-function filterPublished(event = { checked: true }) {
+function filterPublished(event = { checked: false }) {
     published = event.checked;
     
     registers = registersCache.filter(i => i.published === published);

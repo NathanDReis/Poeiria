@@ -36,7 +36,7 @@ function poeiria(data) {
 
     data.map((poeiria) => {
         $box.innerHTML += `
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;" id="${poeiria.uid}">
             <img src="${poeiria.url ?? '../../assets/book.webp'}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${poeiria.title}</h5>
@@ -46,6 +46,8 @@ function poeiria(data) {
         </div>
         `;
     });
+
+    scroll()
 }
 
 function author(data) {

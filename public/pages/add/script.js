@@ -6,7 +6,7 @@ let poeiria;
 let urlImage = "";
 let currentMedia = {};
 
-(async () => {
+async function getAll() {
     try {
         isLoading.true();
         poeiria = await Poeiria.getDoc();
@@ -24,7 +24,7 @@ let currentMedia = {};
         console.error(error);
     }
     finally { isLoading.false() }
-})()
+}
 
 const reset = () => {
     $search.value = "";
@@ -82,8 +82,6 @@ $form.addEventListener("submit", async (e) => {
     finally {
         reset();
         isLoading.false();
-        localStorage.setItem("filter-write", JSON.stringify({search: data.title, author: data.author}));
-        location = `../write/index.html`;
     }
 })
 
@@ -165,9 +163,4 @@ function page(next) {
     next && currentMedia
         ? renderImage('nextMedia')
         : renderImage('prevMedia');
-}
-
-function locationDoc() {
-    const docId = new URLSearchParams(location.search).get('doc');
-    location = docId ? `../read/index.html?doc=${docId}` : "../home/index.html";
 }

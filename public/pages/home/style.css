@@ -1,12 +1,10 @@
 @import url(../../main.css);
 
-main {
-    .box {
-        display: flex;
-        align-items: start;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
-    }
+.box {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
 }
