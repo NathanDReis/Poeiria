@@ -48,7 +48,7 @@ async function deleteData() {
         }
         
         await Poeiria.deleteDoc();
-        location = "../write/index.html";
+        backPage('write');
     }
     catch (error) {
         console.error(error);
@@ -86,7 +86,7 @@ function clipboard() {
 
 function locationDoc() {
     const docId = new URLSearchParams(location.search).get('doc');
-    location = docId ? `../add/index.html?doc=${docId}` : "../add/index.html";
+    locationApp(docId ? `../add/index.html?doc=${docId}` : "../add/index.html", 'add');
 }
 
 async function published() {

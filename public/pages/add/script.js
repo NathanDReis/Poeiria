@@ -81,6 +81,7 @@ $form.addEventListener("submit", async (e) => {
     }
     finally {
         reset();
+        backPage();
         isLoading.false();
     }
 })
@@ -100,7 +101,7 @@ async function getImage(page=1) {
             color = isColor.checked ? `&color=${color.value.toString().replace("#","")}` : '';
 
             const url = `https://api.pexels.com/v1/search/?locale=pt-BR&page=${page}&per_page=16&query=${$search.value}${size}${orientation}${color}`;
-            console.log(url);
+            
             const result = await fetch(url, {
                 headers: {
                     Authorization: "Tjv2x3OIQnFfuvJtPWnXMmlZbfHKBPfoSvOwboq7Hckk5VwIptQY22gs"

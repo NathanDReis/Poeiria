@@ -99,24 +99,55 @@ const formatDate = (date) => {
 }
 
 /* VOLTAR */
-function backPage(urlDefault) {
-    if (urlDefault) return location = `../${urlDefault}/index.html`;
+function backPage(page, isRead) {
+    if (page) return locationApp(`../${page}/index.html`, page);
 
     let url = document.referrer;
-    if (url.length === 0) return location = '../home/index.html';
-
-    const docId = new URLSearchParams(location.search).get('doc');
-    if (!docId) return location = url;
+    if (url.length === 0) return backPage('home');
 
     if (url.includes("write")) {
-        url = '../write/index.html?view=' + docId;
+        page = 'write';
+        url = '../write/index.html?view=';
     }
 
     if (url.includes("home")) {
-        url = '../home/index.html?view=' + docId;
+        page = 'home';
+        url = '../home/index.html?view=';
     }
 
-    location = url;
+    if (url.includes("read")) {
+        page = 'read';
+        url = '../read/index.html?doc=';
+    }
+
+    const docId = new URLSearchParams(location.search).get('doc');
+    if (!docId) return locationApp(url, page);
+
+    if (docId) {
+        url += docId;
+    }
+
+    if (!(url.includes("add") && isRead)) 
+        return locationApp(url, page);
+
+    const history = sessionStorage.getItem("history") ?? "[home]";
+    const historyList = JSON.parse(history);
+    const historyPath = historyList.length > 2 ? historyList.length - 4 : 0
+    url = `../${historyList[historyPath].page}/index.html?view=` + docId;
+
+    locationApp(url, page);
+}
+
+function locationApp(url, page) {
+    const history = sessionStorage.getItem("history") ?? "[]";
+    const historyList = JSON.parse(history);
+    historyList.push({
+        id: historyList.length,
+        url,
+        page,
+    });
+    sessionStorage.setItem("history", JSON.stringify(historyList));
+    window.location = url;
 }
 
 function scroll() {

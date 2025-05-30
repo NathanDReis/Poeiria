@@ -1,3 +1,12 @@
 <script>
-    window.location = "./pages/home/index.html";
+    const url = "./pages/home/index.html";
+    const history = sessionStorage.getItem("history") ?? "[]";
+    const historyList = JSON.parse(history);
+    historyList.push({
+        id: historyList.length,
+        url,
+        page: 'home',
+    });
+    sessionStorage.setItem("history", JSON.stringify(historyList));
+    window.location = url;
 </script>

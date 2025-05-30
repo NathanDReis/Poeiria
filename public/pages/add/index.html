@@ -13,21 +13,21 @@
 <body onload="getAll()">
     <article>
         <header>
-            <h4 class="overflow-hidden ms-5 poeiria" onclick="history.back()">
+            <h4 class="overflow-hidden ms-5 poeiria" onclick="backPage()">
                 POEIRIA
             </h4>
             <nav class="row me-5">
-                <button type="button" class="btn btn-light isLoggedItems hidden col-4" onclick="location = '../add/index.html'"
+                <button type="button" class="btn btn-light isLoggedItems hidden col-4" onclick="backPage('add')"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Adicionar"                
                 >
                     <i class="bi bi-journal-plus fs-5"></i>
                 </button>
-                <button type="button" class="btn btn-light isLoggedItems hidden col-4" onclick="location = '../write/index.html'"
+                <button type="button" class="btn btn-light isLoggedItems hidden col-4" onclick="backPage('write')"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Criações"
                 >
                     <i class="bi bi-journals fs-5"></i>
                 </button>
-                <button type="button" class="btn btn-light col-4" onclick="location = '../home/index.html'"
+                <button type="button" class="btn btn-light col-4" onclick="backPage('home')"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Home"    
                 >
                     <i class="bi bi-house fs-5"></i>                
@@ -104,13 +104,13 @@
 
                         <article class="container-fluid mt-lg-2 p-3 align-items-center filters">
                             <div class="d-flex gap-3 justify-content-center flex-wrap align-items-center p-3">
-                                <select class="form-select" id="orientation" style="max-width: 500px;">
+                                <select class="form-select" id="orientation" style="max-width: 500px;" onchange="getImage()">
                                     <option value="all">Todas as orientações</option>
                                     <option value="landscape">Horizontal</option>
                                     <option value="portrait">Vertical</option>
                                     <option value="square">Quadrado</option>
                                 </select>
-                                <select class="form-select" id="size" style="max-width: 500px;">
+                                <select class="form-select" id="size" style="max-width: 500px;" onchange="getImage()">
                                     <option value="all">Todos os tamanhos</option>
                                     <option value="large">Grande</option>
                                     <option value="medium">Médio</option>
@@ -118,9 +118,9 @@
                                 </select>
                                 <div class="input-group" style="max-width: 500px;">
                                     <div class="input-group-text">
-                                      <input class="form-check-input mt-0" type="checkbox" value="" id="check-color">
+                                      <input class="form-check-input mt-0" type="checkbox" value="" id="check-color" onchange="getImage()">
                                     </div>
-                                    <input type="color" class="form-control form-control-color" id="color">
+                                    <input type="color" class="form-control form-control-color" id="color" onchange="getImage()">
                                 </div>
                             </div>
                         </article>

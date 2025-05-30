@@ -10,7 +10,7 @@ $eyes.forEach((eye) => {
 const validState = async () => {
     try {
         const uid = await Poeiria.getMyUID();
-        if(uid !== '') location = "../home/index.html";
+        if(uid !== '') backPage('home');
     }
     catch (error) {
         console.error(error);
@@ -28,7 +28,7 @@ $form.onsubmit = async (e) => {
         isLoading.true();
         e.preventDefault();
         await Poeiria.login($form.email.value, $form.password.value);
-        location = "../home/index.html";
+        backPage('home');
     }
     catch (error) {
         console.error(error);
@@ -44,7 +44,7 @@ const registration = async () => {
 
         isLoading.true();
         await Poeiria.createUser($form.email.value, $form.password.value);
-        location = "../home/index.html";
+        backPage('home');
     }
     catch (error) {
         console.error(error);

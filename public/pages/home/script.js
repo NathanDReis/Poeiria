@@ -41,13 +41,17 @@ function poeiria(data) {
             <div class="card-body">
                 <h5 class="card-title">${poeiria.title}</h5>
                 <p class="card-text">${poeiria.author}</p>
-                <a href="../read/index.html?doc=${poeiria.uid}" class="btn btn-primary">Ler</a>
+                <a href="#" id="${poeiria.uid}" onclick="ler(this)" class="btn btn-primary">Ler</a>
             </div>
         </div>
         `;
     });
 
     scroll()
+}
+
+function ler(event) {
+    locationApp(`../read/index.html?doc=${event.id}`, 'read')
 }
 
 function author(data) {

@@ -198,7 +198,17 @@ const Poeiria = {
       try {
         const provider = new firebase.auth.GoogleAuthProvider();
         await auth.signInWithPopup(provider);
-        location = "../home/index.html";
+
+        const url = "../home/index.html";
+        const history = sessionStorage.getItem("history") ?? "[]";
+        const historyList = JSON.parse(history);
+        historyList.push({
+            id: historyList.length,
+            url,
+            page: 'home',
+        });
+        sessionStorage.setItem("history", JSON.stringify(historyList));
+        window.location = url;
       }
       catch (error) {
         throw formatedError(error);

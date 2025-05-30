@@ -14,14 +14,14 @@
     <article class="container-xx1">
 
         <header>
-            <h4 class="overflow-hidden ms-5 poeiria" onclick="backPage()">
+            <h4 class="overflow-hidden ms-5 poeiria" onclick="backPage(false, true)">
                 POEIRIA
             </h4>
             <nav class="row me-5">
                 <button 
                     type="button" 
                     class="btn btn-light isLoggedItems hidden col-4" 
-                    onclick="location = '../add/index.html'"
+                    onclick="backPage('add')"
                     data-bs-toggle="tooltip" 
                     data-bs-placement="bottom" 
                     data-bs-title="Adicionar"                
@@ -31,7 +31,7 @@
                 <button 
                     type="button" 
                     class="btn btn-light isLoggedItems hidden col-4" 
-                    onclick="location = '../write/index.html'"
+                    onclick="backPage('write')"
                     data-bs-toggle="tooltip" 
                     data-bs-placement="bottom" 
                     data-bs-title="Criações"
@@ -41,7 +41,7 @@
                 <button 
                     type="button" 
                     class="btn btn-light col-4" 
-                    onclick="location = '../home/index.html'"
+                    onclick="backPage('home')"
                     data-bs-toggle="tooltip" 
                     data-bs-placement="bottom" 
                     data-bs-title="Home"    
