@@ -8,3 +8,12 @@
     gap: 20px;
     padding: 20px;
 }
+
+.card-img-top {
+    background: var(--background), #c6c6c6;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 1000px;
+    height: 250px;                  /* ajuste conforme necessário */
+}

@@ -48,7 +48,7 @@ function poeiria(data) {
     data.map((poeiria) => {
         $box.innerHTML += `
         <div class="card" style="width: 18rem;" id="${poeiria.uid}">
-            <img src="${poeiria.url ?? '../../assets/book.webp'}" class="card-img-top" alt="...">
+            <div style="--background: url('${poeiria.url ?? '../../assets/book.webp'}')" class="card-img-top" alt="..."></div>
             <div class="card-body">
                 <h5 class="card-title">${poeiria.title}</h5>
                 <p class="card-text">${poeiria.author}</p>
