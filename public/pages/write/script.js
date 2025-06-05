@@ -52,7 +52,7 @@ function poeiria(data) {
             <div class="card-body">
                 <h5 class="card-title">${poeiria.title}</h5>
                 <p class="card-text">${poeiria.author}</p>
-                <a href="#" id="${poeiria.uid}" onclick="ler(this)" class="btn btn-primary">Ler</a>
+                <a id="${poeiria.uid}" onclick="ler(this)" class="btn btn-primary">Ler</a>
             </div>
         </div>
         `;
