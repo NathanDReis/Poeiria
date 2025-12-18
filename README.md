@@ -10,15 +10,15 @@ Divirta-se e desenvolva sua criatividade, treine sua escrita e aprenda com difer
 
 ---
 
-## 🛠️ Tecnologias
+Frontend
 
-### Frontend
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
 
-### Backend & Serviços
+Backend & Serviços
+
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)
 ![Firebase Auth](https://img.shields.io/badge/Firebase_Auth-FFCA28?logo=firebase&logoColor=black)
 ![Google Login](https://img.shields.io/badge/Google_Login-4285F4?logo=google&logoColor=white)
@@ -26,9 +26,9 @@ Divirta-se e desenvolva sua criatividade, treine sua escrita e aprenda com difer
 
 ---
 
-## 📸 Créditos de Imagens
+## Créditos de Imagens
 As imagens utilizadas no aplicativo são fornecidas pela **Pexels API**, respeitando seus termos de uso.
 
-## 🌐 Integrações
+## Integrações
 - Pexels API para imagens
 - Google OAuth via Firebase Auth
